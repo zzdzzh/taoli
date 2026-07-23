@@ -1,0 +1,124 @@
+# 足球胜平负 / 篮球网球胜负 套利扫描配置
+
+# ========== 数据源开关 ==========
+sources:
+  sportsbooks: true       # 博彩公司 (The Odds API)
+  polymarket: true        # Polymarket 预测市场
+  kalshi: true            # Kalshi 预测市场
+
+  # Polymarket 联赛代码 → series_id 映射见 src/polymarket.py
+  polymarket_leagues:
+    - fifwc               # 世界杯
+    - epl                 # 英超
+    - ucl                 # 欧冠
+    - lal                 # 西甲
+    - bun                 # 德甲
+    - fl1                 # 法甲
+    - sea                 # 意甲
+    - nor                 # 挪威超
+    - swe                 # 瑞典超
+    - bra                 # 巴西甲
+    - jap                 # 日本J联赛
+    - kor                 # 韩国K联赛
+    # 篮球
+    - nba                 # NBA
+    - wnba                # WNBA
+  # 网球
+    - atp                 # ATP
+    - wta                 # WTA
+
+  # Kalshi 联赛代码 → series_ticker 映射见 src/kalshi.py
+  kalshi_leagues:
+    - worldcup            # 世界杯
+    - epl                 # 英超
+    - laliga              # 西甲
+    - bundesliga          # 德甲
+    - seriea              # 意甲
+    - ligue1              # 法甲
+    - ucl                 # 欧冠
+    # 篮球
+    - nba
+    - wnba
+    # 网球
+    - atp
+    - wta
+
+# ========== 博彩公司 / 交易所 (The Odds API) ==========
+# bet365 / betdaq：Odds API 不支持（仅 bet365_au 付费且限澳网），需另源或人工
+bookmakers:
+  - pinnacle
+  - williamhill
+  - unibet_uk        # 英国 Unibet（不是 unibet / unibet_eu）
+  - onexbet
+  # 博彩交易所（赔率隐含概率合计≈100%，佣金按净盈利收取）
+  - betfair_ex_uk    # Betfair Exchange，佣金 ~5%（活跃可 ~2%）
+  - smarkets         # 固定 2%
+  - matchbook        # ~1%（部分市场封顶）
+
+# ========== 交易所佣金（净盈利 %，用于模拟盘扣费） ==========
+exchanges:
+  betfair_ex_uk:
+    commission_pct: 5.0
+  smarkets:
+    commission_pct: 2.0
+  matchbook:
+    commission_pct: 1.0
+  betdaq:
+    commission_pct: 2.0   # 约 2–5%，促销期可能 0%
+
+sports:
+  # 足球（胜平负）
+  - soccer_norway_eliteserien
+  - soccer_sweden_allsvenskan
+  - soccer_brazil_serie_b
+  - soccer_japan_j_league
+  - soccer_korea_kleague1
+  - soccer_epl
+  - soccer_spain_la_liga
+  - soccer_germany_bundesliga
+  - soccer_france_ligue_one
+  - soccer_italy_serie_a
+  - soccer_uefa_champs_league
+  - soccer_fifa_world_cup
+  # 篮球（胜负）
+  - basketball_nba
+  - basketball_wnba
+  - basketball_ncaab
+  - basketball_euroleague
+  # 网球（胜负，按赛季开放）
+  - tennis_atp_wimbledon
+  - tennis_atp_us_open
+  - tennis_atp_french_open
+  - tennis_atp_australian_open
+  - tennis_wta_wimbledon
+  - tennis_wta_us_open
+  - tennis_wta_french_open
+  - tennis_wta_australian_open
+
+markets:
+  - h2h
+
+regions:
+  - eu
+  - uk
+  - us                    # NBA 等美式体育
+
+# ========== 套利阈值 ==========
+# 套利指数 S = sum(1/odds_i)，足球含平局三项，篮球/网球仅主客两项
+# S < 1 为理论套利；专业系统通常要求 S < 0.98（至少 2% 安全边际）
+max_arb_index: 0.98
+
+# 额外最低理论收益率（%），0 表示仅由 max_arb_index 控制
+min_profit_pct: 0
+
+# ========== 模拟盘 ==========
+paper_trade:
+  initial_bankroll: 100000   # 初始虚拟资金
+  stake_per_trade: 10000       # 每笔投入
+  slippage_pct: 0.5            # 赔率滑点 %
+  fx_loss_pct: 0.3             # 跨平台汇率损耗 %
+
+# ========== 博彩公司缓存 ==========
+# 博彩公司 API 额度有限（500次/月），数据缓存周期（秒）
+# 默认 432000 = 5 天，6次/月 ≈ 360点
+sportsbooks_cache_sec: 432000

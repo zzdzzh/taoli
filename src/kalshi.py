@@ -1,0 +1,307 @@
+"""Kalshi 预测市场数据拉取"""
+
+from __future__ import annotations
+
+import logging
+import re
+import time
+from datetime import datetime, timezone
+from typing import Any
+
+import requests
+
+from .converters import polymarket_price_to_odds
+from .models import MatchOdds, OddsQuote
+
+logger = logging.getLogger(__name__)
+
+KALSHI_URL = "https://api.elections.kalshi.com/trade-api/v2"
+
+# Kalshi 体育 series ticker
+KALSHI_SOCCER_SERIES: dict[str, str] = {
+    # 足球
+    "epl": "KXEPLGAME",
+    "laliga": "KXLALIGAGAME",
+    "bundesliga": "KXBUNDESLIGAGAME",
+    "seriea": "KXSERIEAGAME",
+    "ligue1": "KXLIGUE1GAME",
+    "ucl": "KXUCLGAME",
+    "worldcup": "KXWCGAME",
+    "mls": "KXMLSGAME",
+    # 篮球
+    "nba": "KXNBAGAME",
+    "wnba": "KXWNBAGAME",
+    # 网球
+    "atp": "KXATPMATCH",
+    "wta": "KXWTAMATCH",
+}
+
+# 胜负盘（无平局）联赛
+KALSHI_2WAY_CODES = frozenset({"nba", "wnba", "atp", "wta"})
+
+
+class KalshiClient:
+    """Kalshi 公开 API 客户端（无需认证）"""
+
+    def __init__(self, timeout: int = 30):
+        self.timeout = timeout
+        self.session = requests.Session()
+
+    def fetch_soccer_matches(
+        self,
+        series_codes: list[str] | None = None,
+        limit_per_series: int = 200,
+    ) -> list[MatchOdds]:
+        """拉取体育胜负/胜平负市场（足球、篮球、网球等）"""
+        codes = series_codes or list(KALSHI_SOCCER_SERIES.keys())
+        all_matches: list[MatchOdds] = []
+
+        for code in codes:
+            series_ticker = KALSHI_SOCCER_SERIES.get(code)
+            if not series_ticker:
+                continue
+            try:
+                markets = self._fetch_markets(series_ticker, limit_per_series)
+                matches = self._group_into_matches(markets, code)
+                logger.info("Kalshi %s: %d 场比赛", code, len(matches))
+                all_matches.extend(matches)
+            except requests.RequestException as e:
+                logger.warning("Kalshi %s 拉取失败: %s", code, e)
+            time.sleep(1)
+
+        return all_matches
+
+    def _fetch_markets(
+        self,
+        series_ticker: str,
+        limit: int,
+    ) -> list[dict[str, Any]]:
+        all_markets: list[dict[str, Any]] = []
+        cursor = ""
+
+        while len(all_markets) < limit:
+            params: dict[str, Any] = {
+                "status": "open",
+                "series_ticker": series_ticker,
+                "limit": min(200, limit - len(all_markets)),
+            }
+            if cursor:
+                params["cursor"] = cursor
+
+            resp = self.session.get(
+                f"{KALSHI_URL}/markets",
+                params=params,
+                timeout=self.timeout,
+            )
+            resp.raise_for_status()
+            data = resp.json()
+            batch = data.get("markets", [])
+            all_markets.extend(batch)
+
+            cursor = data.get("cursor", "")
+            if not cursor or not batch:
+                break
+
+        return all_markets
+
+    def _group_into_matches(
+        self,
+        markets: list[dict[str, Any]],
+        league_code: str,
+    ) -> list[MatchOdds]:
+        """将 Kalshi 的二元市场按 event 分组为胜平负"""
+        events: dict[str, list[dict[str, Any]]] = {}
+
+        for market in markets:
+            event_ticker = market.get("event_ticker", "")
+            if event_ticker:
+                events.setdefault(event_ticker, []).append(market)
+
+        matches: list[MatchOdds] = []
+
+        for event_ticker, event_markets in events.items():
+            match = self._parse_event(event_ticker, event_markets, league_code)
+            if match is not None:
+                matches.append(match)
+
+        return matches
+
+    def _parse_event(
+        self,
+        event_ticker: str,
+        markets: list[dict[str, Any]],
+        league_code: str,
+    ) -> MatchOdds | None:
+        is_2way = league_code in KALSHI_2WAY_CODES
+        min_markets = 2 if is_2way else 3
+        min_quotes = 2 if is_2way else 3
+
+        if len(markets) < min_markets:
+            return None
+
+        # 从 event_ticker 或 title 解析队名
+        # 例: KXWCGAME-26JUL15ENGARG → England vs Argentina
+        home, away = self._parse_teams_from_markets(markets)
+        if not home or not away:
+            return None
+
+        quotes: list[OddsQuote] = []
+        close_time = None
+
+        for market in markets:
+            subtitle = (
+                market.get("yes_sub_title")
+                or market.get("subtitle")
+                or market.get("title", "")
+            )
+            outcome = self._map_outcome(subtitle, home, away, market.get("ticker", ""))
+            if outcome is None:
+                continue
+
+            price = self._get_yes_ask(market)
+            if price is None or price <= 0:
+                continue
+
+            odds = polymarket_price_to_odds(price)
+            if odds <= 1.0:
+                continue
+
+            quotes.append(
+                OddsQuote(
+                    bookmaker="kalshi",
+                    outcome=outcome,
+                    odds=odds,
+                    outcome_name=subtitle,
+                    platform="prediction",
+                    raw_price=price,
+                )
+            )
+
+            if market.get("close_time"):
+                close_time = market["close_time"]
+
+        if len(quotes) < min_quotes:
+            return None
+
+        commence = self._parse_close_time(close_time)
+
+        return MatchOdds(
+            sport=f"kalshi_{league_code}",
+            league=league_code,
+            home_team=home,
+            away_team=away,
+            commence_time=commence,
+            quotes=quotes,
+        )
+
+    def _get_yes_ask(self, market: dict[str, Any]) -> float | None:
+        """
+        获取 YES 买入价（美元 0~1）。
+
+        优先用 API 返回的 yes_ask；若无则从 orderbook 推算:
+        yes_ask ≈ 1 - best_no_bid
+        """
+        yes_ask = market.get("yes_ask")
+        if yes_ask and yes_ask > 0:
+            return float(yes_ask) / 100.0 if yes_ask > 1 else float(yes_ask)
+
+        last = market.get("last_price")
+        if last and last > 0:
+            return float(last) / 100.0 if last > 1 else float(last)
+
+        ticker = market.get("ticker", "")
+        if not ticker:
+            return None
+
+        try:
+            resp = self.session.get(
+                f"{KALSHI_URL}/markets/{ticker}/orderbook",
+                timeout=self.timeout,
+            )
+            resp.raise_for_status()
+            ob = resp.json().get("orderbook_fp", {})
+            no_bids = ob.get("no_dollars", [])
+            if no_bids:
+                best_no_bid = float(no_bids[-1][0])
+                yes_ask = 1.0 - best_no_bid
+                if 0 < yes_ask < 1:
+                    return yes_ask
+        except requests.RequestException:
+            pass
+
+        return None
+
+    @staticmethod
+    def _parse_teams_from_markets(
+        markets: list[dict[str, Any]],
+    ) -> tuple[str, str]:
+        """从市场数据推断主客队"""
+        home, away = "", ""
+
+        title = markets[0].get("title", "")
+
+        # 网球: "Will Quentin Halys win the Cina vs Halys: Round Of 32 match?"
+        m = re.search(r"win the (.+?) vs\.?\s+(.+?)\s*:", title, re.I)
+        if m:
+            return m.group(1).strip(), m.group(2).strip()
+
+        # 篮球/足球: "France vs Spain Winner?"
+        m = re.search(r"(.+?)\s+(?:vs\.?|v)\s+(.+?)(?:\s+Winner)?\??$", title, re.I)
+        if m:
+            home = m.group(1).strip()
+            away = m.group(2).strip()
+
+        if not home or not away:
+            rules = markets[0].get("rules_primary", "")
+            m = re.search(r"(.+?)\s+vs\.?\s+(.+?)\s+professional", rules, re.I)
+            if m:
+                home = m.group(1).strip()
+                away = m.group(2).strip()
+
+        if not home or not away:
+            for market in markets:
+                subtitle = market.get("yes_sub_title", "")
+                team = re.sub(r"^Reg Time:\s*", "", subtitle).strip()
+                if team.lower() in ("tie", "draw"):
+                    continue
+                if team:
+                    if not home:
+                        home = team
+                    elif team != home:
+                        away = team
+
+        return home, away
+
+    @staticmethod
+    def _map_outcome(
+        subtitle: str,
+        home: str,
+        away: str,
+        ticker: str,
+    ) -> str | None:
+        text = subtitle.lower().strip()
+        suffix = ticker.rsplit("-", 1)[-1].upper() if ticker else ""
+
+        if suffix in ("TIE", "DRAW") or "tie" in text or text == "draw":
+            return "draw"
+        if suffix == home[:3].upper() or home.lower() in text:
+            return "home"
+        if suffix == away[:3].upper() or away.lower() in text:
+            return "away"
+
+        # 按队名匹配
+        team = re.sub(r"^reg time:\s*", "", subtitle).strip().lower()
+        if team == home.lower():
+            return "home"
+        if team == away.lower():
+            return "away"
+        if "tie" in team or "draw" in team:
+            return "draw"
+
+        return None
+
+    @staticmethod
+    def _parse_close_time(value: str | None) -> datetime:
+        if not value:
+            return datetime.now(timezone.utc)
+        return datetime.fromisoformat(value.replace("Z", "+00:00"))

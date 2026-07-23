@@ -1,0 +1,70 @@
+{
+  "date": "2026-07-14",
+  "games": [
+    {
+      "event_date": "2026-07-14",
+      "event_id": 25211,
+      "event_name": "American All-Stars vs. National All-Stars (8:00 PM ET)",
+      "game_title": "National All-stars",
+      "group_id": 262262,
+      "line": null,
+      "market_class": "moneyline",
+      "market_type": "moneyline",
+      "markets": [
+        {
+          "last_price": 55.0,
+          "market_id": "114138515149713064539478148066361741623220306931314194839810680522821240901317",
+          "platform": "polymarket",
+          "source_url": "https://polymarket.com/event/mlb-al-nl-2026-07-14/mlb-al-nl-2026-07-14?r=predictionhunt",
+          "yes_ask": 56.0,
+          "yes_bid": 55.0
+        },
+        {
+          "last_price": 56.0,
+          "market_id": "KXMLBGAME-26JUL142000ALNL-NL",
+          "platform": "kalshi",
+          "source_url": "https://kalshi.com/markets/KXMLBGAME/KXMLBGAME-26JUL142000ALNL",
+          "yes_ask": 56.0,
+          "yes_bid": 55.0
+        }
+      ],
+      "period": "full",
+      "player": null,
+      "side": "home",
+      "team": "National All-Stars"
+    },
+    {
+      "event_date": "2026-07-14",
+      "event_id": 25211,
+      "event_name": "American All-Stars vs. National All-Stars (8:00 PM ET)",
+      "game_title": "American All-stars",
+      "group_id": 262263,
+      "line": null,
+      "market_class": "moneyline",
+      "market_type": "moneyline",
+      "markets": [
+        {
+          "last_price": 45.0,
+          "market_id": "80080666935022421409008183305973221240813840495378722317438719068727398514970",
+          "platform": "polymarket",
+          "source_url": "https://polymarket.com/event/mlb-al-nl-2026-07-14/mlb-al-nl-2026-07-14?r=predictionhunt",
+          "yes_ask": 45.0,
+          "yes_bid": 44.0
+        },
+        {
+          "last_price": 45.0,
+          "market_id": "KXMLBGAME-26JUL142000ALNL-AL",
+          "platform": "kalshi",
+          "source_url": "https://kalshi.com/markets/KXMLBGAME/KXMLBGAME-26JUL142000ALNL",
+          "yes_ask": 45.0,
+          "yes_bid": 44.0
+        }
+      ],
+      "period": "full",
+      "player": null,
+      "side": "away",
+      "team": "American All-Stars"
+    }
+  ],
+  "sport": "mlb"
+}

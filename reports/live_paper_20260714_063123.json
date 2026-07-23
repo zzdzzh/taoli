@@ -1,0 +1,4357 @@
+{
+  "run_at": "2026-07-14 06:31:22 UTC",
+  "data_sources": [
+    "博彩公司(The Odds API)",
+    "Polymarket",
+    "Kalshi"
+  ],
+  "matches_scanned": 199,
+  "matches_upcoming": 199,
+  "opportunities_found": 0,
+  "positions_opened": 0,
+  "positions_settled": 0,
+  "initial_bankroll": 100000,
+  "final_bankroll": 100000,
+  "total_pnl": 0,
+  "roi_pct": 0.0,
+  "open_positions": [],
+  "settled_positions": [],
+  "new_opportunities": [],
+  "top_near_arb": [
+    {
+      "home_team": "Celta Vigo",
+      "away_team": "CA Osasuna",
+      "league": "La Liga - Spain",
+      "arb_index": 0.9932930918846412,
+      "profit_pct": 0.6752194463200523,
+      "best_home": {
+        "bookmaker": "onexbet",
+        "odds": 2.13,
+        "platform": "sportsbook"
+      },
+      "best_draw": {
+        "bookmaker": "onexbet",
+        "odds": 3.5,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "smarkets",
+        "odds": 4.2,
+        "platform": "exchange"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Brentford",
+      "away_team": "Tottenham Hotspur",
+      "league": "EPL",
+      "arb_index": 0.9951134380453752,
+      "profit_pct": 0.4910557699052909,
+      "best_home": {
+        "bookmaker": "unibet",
+        "odds": 2.5,
+        "platform": "sportsbook"
+      },
+      "best_draw": {
+        "bookmaker": "onexbet",
+        "odds": 3.82,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "onexbet",
+        "odds": 3.0,
+        "platform": "sportsbook"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "England",
+      "away_team": "Argentina",
+      "league": "FIFA World Cup",
+      "arb_index": 0.996887554891152,
+      "profit_pct": 0.3122162668775408,
+      "best_home": {
+        "bookmaker": "smarkets",
+        "odds": 2.78,
+        "platform": "exchange"
+      },
+      "best_draw": {
+        "bookmaker": "onexbet",
+        "odds": 3.08,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "smarkets",
+        "odds": 3.2,
+        "platform": "exchange"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Alavés",
+      "away_team": "Getafe",
+      "league": "La Liga - Spain",
+      "arb_index": 0.9979318926687347,
+      "profit_pct": 0.20723932629655994,
+      "best_home": {
+        "bookmaker": "onexbet",
+        "odds": 2.47,
+        "platform": "sportsbook"
+      },
+      "best_draw": {
+        "bookmaker": "onexbet",
+        "odds": 3.0,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "smarkets",
+        "odds": 3.85,
+        "platform": "exchange"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "France",
+      "away_team": "Spain",
+      "league": "FIFA World Cup",
+      "arb_index": 0.9985074626865671,
+      "profit_pct": 0.1494768310911887,
+      "best_home": {
+        "bookmaker": "betfair_ex_uk",
+        "odds": 2.5,
+        "platform": "exchange"
+      },
+      "best_draw": {
+        "bookmaker": "polymarket",
+        "odds": 3.3333,
+        "platform": "prediction"
+      },
+      "best_away": {
+        "bookmaker": "smarkets",
+        "odds": 3.35,
+        "platform": "exchange"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Borges",
+      "away_team": "Kouame",
+      "league": "atp",
+      "arb_index": 0.9999999999999999,
+      "profit_pct": 2.220446049250313e-14,
+      "best_home": {
+        "bookmaker": "kalshi",
+        "odds": 1.3158,
+        "platform": "prediction"
+      },
+      "best_draw": {},
+      "best_away": {
+        "bookmaker": "kalshi",
+        "odds": 4.1667,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "FC Drita",
+      "away_team": "FK Kauno Žalgiris",
+      "league": "ucl-2025",
+      "arb_index": 1.0,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "polymarket",
+        "odds": 2.5,
+        "platform": "prediction"
+      },
+      "best_draw": {
+        "bookmaker": "polymarket",
+        "odds": 3.4483,
+        "platform": "prediction"
+      },
+      "best_away": {
+        "bookmaker": "polymarket",
+        "odds": 3.2258,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Dahlin",
+      "away_team": "Baez",
+      "league": "atp",
+      "arb_index": 1.0,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "kalshi",
+        "odds": 20.0,
+        "platform": "prediction"
+      },
+      "best_draw": {},
+      "best_away": {
+        "bookmaker": "kalshi",
+        "odds": 1.0526,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Bulgaru",
+      "away_team": "Pridankina",
+      "league": "wta",
+      "arb_index": 1.0,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "kalshi",
+        "odds": 5.2632,
+        "platform": "prediction"
+      },
+      "best_draw": {},
+      "best_away": {
+        "bookmaker": "kalshi",
+        "odds": 1.2346,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Bologna",
+      "away_team": "Lazio",
+      "league": "Serie A - Italy",
+      "arb_index": 1.0012966050117753,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "onexbet",
+        "odds": 2.21,
+        "platform": "sportsbook"
+      },
+      "best_draw": {
+        "bookmaker": "onexbet",
+        "odds": 3.42,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "smarkets",
+        "odds": 3.9,
+        "platform": "exchange"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Espanyol",
+      "away_team": "Levante",
+      "league": "La Liga - Spain",
+      "arb_index": 1.0016420361247946,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "onexbet",
+        "odds": 2.1,
+        "platform": "sportsbook"
+      },
+      "best_draw": {
+        "bookmaker": "onexbet",
+        "odds": 3.48,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "betfair_ex_uk",
+        "odds": 4.2,
+        "platform": "exchange"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Newcastle United",
+      "away_team": "Liverpool",
+      "league": "EPL",
+      "arb_index": 1.0029916865234023,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "betfair_ex_uk",
+        "odds": 3.1,
+        "platform": "exchange"
+      },
+      "best_draw": {
+        "bookmaker": "onexbet",
+        "odds": 4.01,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "onexbet",
+        "odds": 2.32,
+        "platform": "sportsbook"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Arsenal",
+      "away_team": "Coventry City",
+      "league": "EPL",
+      "arb_index": 1.0044091710758378,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "betfair_ex_uk",
+        "odds": 1.2,
+        "platform": "exchange"
+      },
+      "best_draw": {
+        "bookmaker": "onexbet",
+        "odds": 8.1,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "betfair_ex_uk",
+        "odds": 21.0,
+        "platform": "exchange"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Inter Milan",
+      "away_team": "Monza",
+      "league": "Serie A - Italy",
+      "arb_index": 1.0053795218393167,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "onexbet",
+        "odds": 1.26,
+        "platform": "sportsbook"
+      },
+      "best_draw": {
+        "bookmaker": "onexbet",
+        "odds": 6.54,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "betfair_ex_uk",
+        "odds": 17.0,
+        "platform": "exchange"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Atlético Madrid",
+      "away_team": "Málaga",
+      "league": "La Liga - Spain",
+      "arb_index": 1.0073742047426257,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "onexbet",
+        "odds": 1.33,
+        "platform": "sportsbook"
+      },
+      "best_draw": {
+        "bookmaker": "unibet",
+        "odds": 5.6,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "betfair_ex_uk",
+        "odds": 13.0,
+        "platform": "exchange"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Connecticut Sun",
+      "away_team": "Portland Fire",
+      "league": "WNBA",
+      "arb_index": 1.0076142131979695,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "matchbook",
+        "odds": 1.97,
+        "platform": "exchange"
+      },
+      "best_draw": {},
+      "best_away": {
+        "bookmaker": "matchbook",
+        "odds": 2.0,
+        "platform": "exchange"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Frosinone",
+      "away_team": "Juventus",
+      "league": "Serie A - Italy",
+      "arb_index": 1.0078480881820935,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "betfair_ex_uk",
+        "odds": 7.8,
+        "platform": "exchange"
+      },
+      "best_draw": {
+        "bookmaker": "onexbet",
+        "odds": 4.6,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "onexbet",
+        "odds": 1.51,
+        "platform": "sportsbook"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Deportivo La Coruña",
+      "away_team": "Elche CF",
+      "league": "La Liga - Spain",
+      "arb_index": 1.007997156566554,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "onexbet",
+        "odds": 2.38,
+        "platform": "sportsbook"
+      },
+      "best_draw": {
+        "bookmaker": "onexbet",
+        "odds": 3.31,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "betfair_ex_uk",
+        "odds": 3.5,
+        "platform": "exchange"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Udinese",
+      "away_team": "Como",
+      "league": "Serie A - Italy",
+      "arb_index": 1.009172992868645,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "smarkets",
+        "odds": 4.8,
+        "platform": "exchange"
+      },
+      "best_draw": {
+        "bookmaker": "onexbet",
+        "odds": 3.68,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "onexbet",
+        "odds": 1.89,
+        "platform": "sportsbook"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "SC Freiburg",
+      "away_team": "Werder Bremen",
+      "league": "Bundesliga - Germany",
+      "arb_index": 1.0093364069285966,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "smarkets",
+        "odds": 2.12,
+        "platform": "exchange"
+      },
+      "best_draw": {
+        "bookmaker": "onexbet",
+        "odds": 3.73,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "onexbet",
+        "odds": 3.71,
+        "platform": "sportsbook"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "1. FC Köln",
+      "away_team": "TSG Hoffenheim",
+      "league": "Bundesliga - Germany",
+      "arb_index": 1.0094388907714897,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "onexbet",
+        "odds": 3.2,
+        "platform": "sportsbook"
+      },
+      "best_draw": {
+        "bookmaker": "betfair_ex_uk",
+        "odds": 3.9,
+        "platform": "exchange"
+      },
+      "best_away": {
+        "bookmaker": "onexbet",
+        "odds": 2.27,
+        "platform": "sportsbook"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Fulham",
+      "away_team": "Chelsea",
+      "league": "EPL",
+      "arb_index": 1.00944669365722,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "williamhill",
+        "odds": 3.25,
+        "platform": "sportsbook"
+      },
+      "best_draw": {
+        "bookmaker": "betfair_ex_uk",
+        "odds": 3.8,
+        "platform": "exchange"
+      },
+      "best_away": {
+        "bookmaker": "betfair_ex_uk",
+        "odds": 2.28,
+        "platform": "exchange"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Real Madrid",
+      "away_team": "Real Sociedad",
+      "league": "La Liga - Spain",
+      "arb_index": 1.009931506849315,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "onexbet",
+        "odds": 1.46,
+        "platform": "sportsbook"
+      },
+      "best_draw": {
+        "bookmaker": "betfair_ex_uk",
+        "odds": 5.0,
+        "platform": "exchange"
+      },
+      "best_away": {
+        "bookmaker": "unibet",
+        "odds": 8.0,
+        "platform": "sportsbook"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "New Saints",
+      "away_team": "Sabah Masazir",
+      "league": "ucl",
+      "arb_index": 1.0099999999999998,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "kalshi",
+        "odds": 5.2632,
+        "platform": "prediction"
+      },
+      "best_draw": {
+        "bookmaker": "kalshi",
+        "odds": 4.5455,
+        "platform": "prediction"
+      },
+      "best_away": {
+        "bookmaker": "kalshi",
+        "odds": 1.6667,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Krejcikova",
+      "away_team": "Tomova",
+      "league": "wta",
+      "arb_index": 1.0099999999999998,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "kalshi",
+        "odds": 1.1111,
+        "platform": "prediction"
+      },
+      "best_draw": {},
+      "best_away": {
+        "bookmaker": "kalshi",
+        "odds": 9.0909,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Kawa",
+      "away_team": "Waltert",
+      "league": "wta",
+      "arb_index": 1.0099999999999998,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "kalshi",
+        "odds": 3.0303,
+        "platform": "prediction"
+      },
+      "best_draw": {},
+      "best_away": {
+        "bookmaker": "kalshi",
+        "odds": 1.4706,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "SK Iberia 1999",
+      "away_team": "FC Flora",
+      "league": "ucl-2025",
+      "arb_index": 1.01,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "polymarket",
+        "odds": 1.6129,
+        "platform": "prediction"
+      },
+      "best_draw": {
+        "bookmaker": "polymarket",
+        "odds": 4.7619,
+        "platform": "prediction"
+      },
+      "best_away": {
+        "bookmaker": "polymarket",
+        "odds": 5.5556,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Botafogo FR",
+      "away_team": "Santos FC",
+      "league": "brazil-serie-a",
+      "arb_index": 1.01,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "polymarket",
+        "odds": 2.0833,
+        "platform": "prediction"
+      },
+      "best_draw": {
+        "bookmaker": "polymarket",
+        "odds": 3.7037,
+        "platform": "prediction"
+      },
+      "best_away": {
+        "bookmaker": "polymarket",
+        "odds": 3.8462,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Larne",
+      "away_team": "Tre Fiori",
+      "league": "ucl",
+      "arb_index": 1.01,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "kalshi",
+        "odds": 1.2048,
+        "platform": "prediction"
+      },
+      "best_draw": {
+        "bookmaker": "kalshi",
+        "odds": 8.3333,
+        "platform": "prediction"
+      },
+      "best_away": {
+        "bookmaker": "kalshi",
+        "odds": 16.6667,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "KF Drita",
+      "away_team": "Kauno",
+      "league": "ucl",
+      "arb_index": 1.01,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "kalshi",
+        "odds": 2.381,
+        "platform": "prediction"
+      },
+      "best_draw": {
+        "bookmaker": "kalshi",
+        "odds": 3.5714,
+        "platform": "prediction"
+      },
+      "best_away": {
+        "bookmaker": "kalshi",
+        "odds": 3.2258,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Riga FC",
+      "away_team": "Ararat-Armenia",
+      "league": "ucl",
+      "arb_index": 1.01,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "kalshi",
+        "odds": 1.7544,
+        "platform": "prediction"
+      },
+      "best_draw": {
+        "bookmaker": "kalshi",
+        "odds": 4.1667,
+        "platform": "prediction"
+      },
+      "best_away": {
+        "bookmaker": "kalshi",
+        "odds": 5.0,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Seattle",
+      "away_team": "Chicago",
+      "league": "wnba",
+      "arb_index": 1.01,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "kalshi",
+        "odds": 2.5,
+        "platform": "prediction"
+      },
+      "best_draw": {},
+      "best_away": {
+        "bookmaker": "kalshi",
+        "odds": 1.6393,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Washington",
+      "away_team": "Toronto",
+      "league": "wnba",
+      "arb_index": 1.01,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "kalshi",
+        "odds": 1.9231,
+        "platform": "prediction"
+      },
+      "best_draw": {},
+      "best_away": {
+        "bookmaker": "kalshi",
+        "odds": 2.0408,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Van de Zandschulp",
+      "away_team": "Daniel",
+      "league": "atp",
+      "arb_index": 1.01,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "kalshi",
+        "odds": 1.6667,
+        "platform": "prediction"
+      },
+      "best_draw": {},
+      "best_away": {
+        "bookmaker": "kalshi",
+        "odds": 2.439,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Diaz Acosta",
+      "away_team": "Midon",
+      "league": "atp",
+      "arb_index": 1.01,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "kalshi",
+        "odds": 1.2658,
+        "platform": "prediction"
+      },
+      "best_draw": {},
+      "best_away": {
+        "bookmaker": "kalshi",
+        "odds": 4.5455,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Cecchinato",
+      "away_team": "Burruchaga",
+      "league": "atp",
+      "arb_index": 1.01,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "kalshi",
+        "odds": 2.2727,
+        "platform": "prediction"
+      },
+      "best_draw": {},
+      "best_away": {
+        "bookmaker": "kalshi",
+        "odds": 1.7544,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Marozsan",
+      "away_team": "Prado Angelo",
+      "league": "atp",
+      "arb_index": 1.01,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "kalshi",
+        "odds": 1.3333,
+        "platform": "prediction"
+      },
+      "best_draw": {},
+      "best_away": {
+        "bookmaker": "kalshi",
+        "odds": 3.8462,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Gomez",
+      "away_team": "McDonald",
+      "league": "atp",
+      "arb_index": 1.01,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "kalshi",
+        "odds": 1.7857,
+        "platform": "prediction"
+      },
+      "best_draw": {},
+      "best_away": {
+        "bookmaker": "kalshi",
+        "odds": 2.2222,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Kym",
+      "away_team": "Dietrich",
+      "league": "atp",
+      "arb_index": 1.01,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "kalshi",
+        "odds": 1.5625,
+        "platform": "prediction"
+      },
+      "best_draw": {},
+      "best_away": {
+        "bookmaker": "kalshi",
+        "odds": 2.7027,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Droguet",
+      "away_team": "Blockx",
+      "league": "atp",
+      "arb_index": 1.01,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "kalshi",
+        "odds": 2.6316,
+        "platform": "prediction"
+      },
+      "best_draw": {},
+      "best_away": {
+        "bookmaker": "kalshi",
+        "odds": 1.5873,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Budkov Kjaer",
+      "away_team": "Pellegrino",
+      "league": "atp",
+      "arb_index": 1.01,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "kalshi",
+        "odds": 2.1277,
+        "platform": "prediction"
+      },
+      "best_draw": {},
+      "best_away": {
+        "bookmaker": "kalshi",
+        "odds": 1.8519,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Choinski",
+      "away_team": "Basilashvili",
+      "league": "atp",
+      "arb_index": 1.01,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "kalshi",
+        "odds": 1.6129,
+        "platform": "prediction"
+      },
+      "best_draw": {},
+      "best_away": {
+        "bookmaker": "kalshi",
+        "odds": 2.5641,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Ofner",
+      "away_team": "Tirante",
+      "league": "atp",
+      "arb_index": 1.01,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "kalshi",
+        "odds": 2.439,
+        "platform": "prediction"
+      },
+      "best_draw": {},
+      "best_away": {
+        "bookmaker": "kalshi",
+        "odds": 1.6667,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Svrcina",
+      "away_team": "Dimitrov",
+      "league": "atp",
+      "arb_index": 1.01,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "kalshi",
+        "odds": 2.7027,
+        "platform": "prediction"
+      },
+      "best_draw": {},
+      "best_away": {
+        "bookmaker": "kalshi",
+        "odds": 1.5625,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Altmaier",
+      "away_team": "Gaston",
+      "league": "atp",
+      "arb_index": 1.01,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "kalshi",
+        "odds": 1.6129,
+        "platform": "prediction"
+      },
+      "best_draw": {},
+      "best_away": {
+        "bookmaker": "kalshi",
+        "odds": 2.5641,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Muller",
+      "away_team": "Shevchenko",
+      "league": "atp",
+      "arb_index": 1.01,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "kalshi",
+        "odds": 2.7778,
+        "platform": "prediction"
+      },
+      "best_draw": {},
+      "best_away": {
+        "bookmaker": "kalshi",
+        "odds": 1.5385,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Tsitsipas",
+      "away_team": "Buse",
+      "league": "atp",
+      "arb_index": 1.01,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "kalshi",
+        "odds": 2.381,
+        "platform": "prediction"
+      },
+      "best_draw": {},
+      "best_away": {
+        "bookmaker": "kalshi",
+        "odds": 1.6949,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Martinez",
+      "away_team": "Hanfmann",
+      "league": "atp",
+      "arb_index": 1.01,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "kalshi",
+        "odds": 4.1667,
+        "platform": "prediction"
+      },
+      "best_draw": {},
+      "best_away": {
+        "bookmaker": "kalshi",
+        "odds": 1.2987,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Cerundolo",
+      "away_team": "Kolar",
+      "league": "atp",
+      "arb_index": 1.01,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "kalshi",
+        "odds": 1.2195,
+        "platform": "prediction"
+      },
+      "best_draw": {},
+      "best_away": {
+        "bookmaker": "kalshi",
+        "odds": 5.2632,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Putintseva",
+      "away_team": "Liu",
+      "league": "wta",
+      "arb_index": 1.01,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "kalshi",
+        "odds": 1.6129,
+        "platform": "prediction"
+      },
+      "best_draw": {},
+      "best_away": {
+        "bookmaker": "kalshi",
+        "odds": 2.5641,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Oliynykova",
+      "away_team": "Oz",
+      "league": "wta",
+      "arb_index": 1.01,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "kalshi",
+        "odds": 1.25,
+        "platform": "prediction"
+      },
+      "best_draw": {},
+      "best_away": {
+        "bookmaker": "kalshi",
+        "odds": 4.7619,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Salkova",
+      "away_team": "Ibragimova",
+      "league": "wta",
+      "arb_index": 1.01,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "kalshi",
+        "odds": 1.7544,
+        "platform": "prediction"
+      },
+      "best_draw": {},
+      "best_away": {
+        "bookmaker": "kalshi",
+        "odds": 2.2727,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Avanesyan",
+      "away_team": "Uchijima",
+      "league": "wta",
+      "arb_index": 1.01,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "kalshi",
+        "odds": 1.7857,
+        "platform": "prediction"
+      },
+      "best_draw": {},
+      "best_away": {
+        "bookmaker": "kalshi",
+        "odds": 2.2222,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Tauson",
+      "away_team": "Hibino",
+      "league": "wta",
+      "arb_index": 1.01,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "kalshi",
+        "odds": 1.2658,
+        "platform": "prediction"
+      },
+      "best_draw": {},
+      "best_away": {
+        "bookmaker": "kalshi",
+        "odds": 4.5455,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Ito",
+      "away_team": "Korneeva",
+      "league": "wta",
+      "arb_index": 1.01,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "kalshi",
+        "odds": 5.2632,
+        "platform": "prediction"
+      },
+      "best_draw": {},
+      "best_away": {
+        "bookmaker": "kalshi",
+        "odds": 1.2195,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Monnet",
+      "away_team": "Masarova",
+      "league": "wta",
+      "arb_index": 1.01,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "kalshi",
+        "odds": 5.8824,
+        "platform": "prediction"
+      },
+      "best_draw": {},
+      "best_away": {
+        "bookmaker": "kalshi",
+        "odds": 1.1905,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Valentova",
+      "away_team": "Costoulas",
+      "league": "wta",
+      "arb_index": 1.01,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "kalshi",
+        "odds": 1.2195,
+        "platform": "prediction"
+      },
+      "best_draw": {},
+      "best_away": {
+        "bookmaker": "kalshi",
+        "odds": 5.2632,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Blinkova",
+      "away_team": "Sasnovich",
+      "league": "wta",
+      "arb_index": 1.01,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "kalshi",
+        "odds": 2.2727,
+        "platform": "prediction"
+      },
+      "best_draw": {},
+      "best_away": {
+        "bookmaker": "kalshi",
+        "odds": 1.7544,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Sherif Ahmed Abdelaziz",
+      "away_team": "Galfi",
+      "league": "wta",
+      "arb_index": 1.01,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "kalshi",
+        "odds": 1.6393,
+        "platform": "prediction"
+      },
+      "best_draw": {},
+      "best_away": {
+        "bookmaker": "kalshi",
+        "odds": 2.5,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Quevedo",
+      "away_team": "Ruse",
+      "league": "wta",
+      "arb_index": 1.01,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "kalshi",
+        "odds": 3.2258,
+        "platform": "prediction"
+      },
+      "best_draw": {},
+      "best_away": {
+        "bookmaker": "kalshi",
+        "odds": 1.4286,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Badosa",
+      "away_team": "Kalinina",
+      "league": "wta",
+      "arb_index": 1.01,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "kalshi",
+        "odds": 1.6667,
+        "platform": "prediction"
+      },
+      "best_draw": {},
+      "best_away": {
+        "bookmaker": "kalshi",
+        "odds": 2.439,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Arango",
+      "away_team": "Zidansek",
+      "league": "wta",
+      "arb_index": 1.01,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "kalshi",
+        "odds": 1.8519,
+        "platform": "prediction"
+      },
+      "best_draw": {},
+      "best_away": {
+        "bookmaker": "kalshi",
+        "odds": 2.1277,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "France",
+      "away_team": "Spain",
+      "league": "worldcup",
+      "arb_index": 1.0100000000000002,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "kalshi",
+        "odds": 2.439,
+        "platform": "prediction"
+      },
+      "best_draw": {
+        "bookmaker": "kalshi",
+        "odds": 3.3333,
+        "platform": "prediction"
+      },
+      "best_away": {
+        "bookmaker": "kalshi",
+        "odds": 3.3333,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Timofeeva",
+      "away_team": "Li",
+      "league": "wta",
+      "arb_index": 1.0100000000000002,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "kalshi",
+        "odds": 2.3256,
+        "platform": "prediction"
+      },
+      "best_draw": {},
+      "best_away": {
+        "bookmaker": "kalshi",
+        "odds": 1.7241,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Sevilla",
+      "away_team": "Rayo Vallecano",
+      "league": "La Liga - Spain",
+      "arb_index": 1.0103197910676005,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "onexbet",
+        "odds": 2.36,
+        "platform": "sportsbook"
+      },
+      "best_draw": {
+        "bookmaker": "onexbet",
+        "odds": 3.37,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "betfair_ex_uk",
+        "odds": 3.45,
+        "platform": "exchange"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Nottingham Forest",
+      "away_team": "Leeds United",
+      "league": "EPL",
+      "arb_index": 1.0112796067852248,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "onexbet",
+        "odds": 2.34,
+        "platform": "sportsbook"
+      },
+      "best_draw": {
+        "bookmaker": "onexbet",
+        "odds": 3.56,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "betfair_ex_uk",
+        "odds": 3.3,
+        "platform": "exchange"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Hull City",
+      "away_team": "Manchester United",
+      "league": "EPL",
+      "arb_index": 1.0113220113220112,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "betfair_ex_uk",
+        "odds": 7.8,
+        "platform": "exchange"
+      },
+      "best_draw": {
+        "bookmaker": "onexbet",
+        "odds": 4.62,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "onexbet",
+        "odds": 1.5,
+        "platform": "sportsbook"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Örgryte IS",
+      "away_team": "Djurgardens IF",
+      "league": "Allsvenskan - Sweden",
+      "arb_index": 1.0117521367521367,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "unibet",
+        "odds": 8.0,
+        "platform": "sportsbook"
+      },
+      "best_draw": {
+        "bookmaker": "unibet",
+        "odds": 5.2,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "pinnacle",
+        "odds": 1.44,
+        "platform": "sportsbook"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "RB Leipzig",
+      "away_team": "Borussia Monchengladbach",
+      "league": "Bundesliga - Germany",
+      "arb_index": 1.0120488820088258,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "onexbet",
+        "odds": 1.59,
+        "platform": "sportsbook"
+      },
+      "best_draw": {
+        "bookmaker": "onexbet",
+        "odds": 4.78,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "unibet",
+        "odds": 5.75,
+        "platform": "sportsbook"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Marseille",
+      "away_team": "Strasbourg",
+      "league": "Ligue 1 - France",
+      "arb_index": 1.0133176183120445,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "onexbet",
+        "odds": 1.69,
+        "platform": "sportsbook"
+      },
+      "best_draw": {
+        "bookmaker": "onexbet",
+        "odds": 4.67,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "onexbet",
+        "odds": 4.82,
+        "platform": "sportsbook"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "AS Roma",
+      "away_team": "Fiorentina",
+      "league": "Serie A - Italy",
+      "arb_index": 1.0138865561599117,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "onexbet",
+        "odds": 1.57,
+        "platform": "sportsbook"
+      },
+      "best_draw": {
+        "bookmaker": "onexbet",
+        "odds": 4.35,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "onexbet",
+        "odds": 6.8,
+        "platform": "sportsbook"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "RC Lens",
+      "away_team": "Auxerre",
+      "league": "Ligue 1 - France",
+      "arb_index": 1.0139673394079662,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "onexbet",
+        "odds": 1.64,
+        "platform": "sportsbook"
+      },
+      "best_draw": {
+        "bookmaker": "onexbet",
+        "odds": 4.51,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "onexbet",
+        "odds": 5.48,
+        "platform": "sportsbook"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Atalanta BC",
+      "away_team": "Sassuolo",
+      "league": "Serie A - Italy",
+      "arb_index": 1.0142425007151699,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "onexbet",
+        "odds": 1.58,
+        "platform": "sportsbook"
+      },
+      "best_draw": {
+        "bookmaker": "onexbet",
+        "odds": 4.55,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "onexbet",
+        "odds": 6.19,
+        "platform": "sportsbook"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "FSV Mainz 05",
+      "away_team": "SC Paderborn",
+      "league": "Bundesliga - Germany",
+      "arb_index": 1.0142970716748805,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "onexbet",
+        "odds": 1.75,
+        "platform": "sportsbook"
+      },
+      "best_draw": {
+        "bookmaker": "onexbet",
+        "odds": 4.21,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "onexbet",
+        "odds": 4.87,
+        "platform": "sportsbook"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Everton",
+      "away_team": "Crystal Palace",
+      "league": "EPL",
+      "arb_index": 1.0143041724275677,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "onexbet",
+        "odds": 2.21,
+        "platform": "sportsbook"
+      },
+      "best_draw": {
+        "bookmaker": "onexbet",
+        "odds": 3.58,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "onexbet",
+        "odds": 3.54,
+        "platform": "sportsbook"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Angers",
+      "away_team": "Lille",
+      "league": "Ligue 1 - France",
+      "arb_index": 1.0147128553254476,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "onexbet",
+        "odds": 5.33,
+        "platform": "sportsbook"
+      },
+      "best_draw": {
+        "bookmaker": "onexbet",
+        "odds": 4.07,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "onexbet",
+        "odds": 1.72,
+        "platform": "sportsbook"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Nice",
+      "away_team": "Lorient",
+      "league": "Ligue 1 - France",
+      "arb_index": 1.0148051065482258,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "onexbet",
+        "odds": 2.25,
+        "platform": "sportsbook"
+      },
+      "best_draw": {
+        "bookmaker": "onexbet",
+        "odds": 3.78,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "onexbet",
+        "odds": 3.27,
+        "platform": "sportsbook"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Venezia",
+      "away_team": "Lecce",
+      "league": "Serie A - Italy",
+      "arb_index": 1.0148532370754593,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "onexbet",
+        "odds": 2.43,
+        "platform": "sportsbook"
+      },
+      "best_draw": {
+        "bookmaker": "onexbet",
+        "odds": 3.33,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "betfair_ex_uk",
+        "odds": 3.3,
+        "platform": "exchange"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Union Berlin",
+      "away_team": "Eintracht Frankfurt",
+      "league": "Bundesliga - Germany",
+      "arb_index": 1.0149435321757696,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "onexbet",
+        "odds": 2.46,
+        "platform": "sportsbook"
+      },
+      "best_draw": {
+        "bookmaker": "onexbet",
+        "odds": 3.68,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "onexbet",
+        "odds": 2.97,
+        "platform": "sportsbook"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Brighton and Hove Albion",
+      "away_team": "Aston Villa",
+      "league": "EPL",
+      "arb_index": 1.015075744894543,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "onexbet",
+        "odds": 2.32,
+        "platform": "sportsbook"
+      },
+      "best_draw": {
+        "bookmaker": "onexbet",
+        "odds": 3.84,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "onexbet",
+        "odds": 3.09,
+        "platform": "sportsbook"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Borussia Dortmund",
+      "away_team": "Hamburger SV",
+      "league": "Bundesliga - Germany",
+      "arb_index": 1.0152008625879696,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "onexbet",
+        "odds": 1.37,
+        "platform": "sportsbook"
+      },
+      "best_draw": {
+        "bookmaker": "onexbet",
+        "odds": 5.59,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "smarkets",
+        "odds": 9.4,
+        "platform": "exchange"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Troyes",
+      "away_team": "Paris FC",
+      "league": "Ligue 1 - France",
+      "arb_index": 1.0153939090946964,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "onexbet",
+        "odds": 2.8,
+        "platform": "sportsbook"
+      },
+      "best_draw": {
+        "bookmaker": "onexbet",
+        "odds": 3.78,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "onexbet",
+        "odds": 2.54,
+        "platform": "sportsbook"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Toulouse",
+      "away_team": "Lyon",
+      "league": "Ligue 1 - France",
+      "arb_index": 1.0155304672229652,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "onexbet",
+        "odds": 3.58,
+        "platform": "sportsbook"
+      },
+      "best_draw": {
+        "bookmaker": "onexbet",
+        "odds": 3.88,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "onexbet",
+        "odds": 2.09,
+        "platform": "sportsbook"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Augsburg",
+      "away_team": "FC Schalke 04",
+      "league": "Bundesliga - Germany",
+      "arb_index": 1.0156441825388474,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "onexbet",
+        "odds": 2.15,
+        "platform": "sportsbook"
+      },
+      "best_draw": {
+        "bookmaker": "betfair_ex_uk",
+        "odds": 3.9,
+        "platform": "exchange"
+      },
+      "best_away": {
+        "bookmaker": "onexbet",
+        "odds": 3.4,
+        "platform": "sportsbook"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Ipswich Town",
+      "away_team": "Sunderland",
+      "league": "EPL",
+      "arb_index": 1.0158017767738794,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "onexbet",
+        "odds": 2.83,
+        "platform": "sportsbook"
+      },
+      "best_draw": {
+        "bookmaker": "onexbet",
+        "odds": 3.44,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "onexbet",
+        "odds": 2.69,
+        "platform": "sportsbook"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Torino",
+      "away_team": "AC Milan",
+      "league": "Serie A - Italy",
+      "arb_index": 1.0158582130533902,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "onexbet",
+        "odds": 4.61,
+        "platform": "sportsbook"
+      },
+      "best_draw": {
+        "bookmaker": "onexbet",
+        "odds": 3.87,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "onexbet",
+        "odds": 1.85,
+        "platform": "sportsbook"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Le Mans FC",
+      "away_team": "Brest",
+      "league": "Ligue 1 - France",
+      "arb_index": 1.015987408694101,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "onexbet",
+        "odds": 2.58,
+        "platform": "sportsbook"
+      },
+      "best_draw": {
+        "bookmaker": "onexbet",
+        "odds": 3.74,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "onexbet",
+        "odds": 2.77,
+        "platform": "sportsbook"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Larne FC",
+      "away_team": "Tre Fiori FC",
+      "league": "ucl-2025",
+      "arb_index": 1.016,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "polymarket",
+        "odds": 1.1905,
+        "platform": "prediction"
+      },
+      "best_draw": {
+        "bookmaker": "polymarket",
+        "odds": 7.6923,
+        "platform": "prediction"
+      },
+      "best_away": {
+        "bookmaker": "polymarket",
+        "odds": 21.7391,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Parma",
+      "away_team": "Cagliari",
+      "league": "Serie A - Italy",
+      "arb_index": 1.0160990383082726,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "onexbet",
+        "odds": 2.75,
+        "platform": "sportsbook"
+      },
+      "best_draw": {
+        "bookmaker": "onexbet",
+        "odds": 3.19,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "onexbet",
+        "odds": 2.95,
+        "platform": "sportsbook"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Valencia",
+      "away_team": "Real Betis",
+      "league": "La Liga - Spain",
+      "arb_index": 1.0161769497632875,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "onexbet",
+        "odds": 2.79,
+        "platform": "sportsbook"
+      },
+      "best_draw": {
+        "bookmaker": "onexbet",
+        "odds": 3.4,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "onexbet",
+        "odds": 2.75,
+        "platform": "sportsbook"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Real Racing Club de Santander",
+      "away_team": "Villarreal",
+      "league": "La Liga - Spain",
+      "arb_index": 1.0163163629862995,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "betfair_ex_uk",
+        "odds": 3.45,
+        "platform": "exchange"
+      },
+      "best_draw": {
+        "bookmaker": "betfair_ex_uk",
+        "odds": 3.65,
+        "platform": "exchange"
+      },
+      "best_away": {
+        "bookmaker": "pinnacle",
+        "odds": 2.21,
+        "platform": "sportsbook"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Paris Saint Germain",
+      "away_team": "Rennes",
+      "league": "Ligue 1 - France",
+      "arb_index": 1.0165429560135484,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "onexbet",
+        "odds": 1.45,
+        "platform": "sportsbook"
+      },
+      "best_draw": {
+        "bookmaker": "onexbet",
+        "odds": 5.74,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "onexbet",
+        "odds": 6.55,
+        "platform": "sportsbook"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Genoa",
+      "away_team": "Napoli",
+      "league": "Serie A - Italy",
+      "arb_index": 1.0166142622954824,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "onexbet",
+        "odds": 5.01,
+        "platform": "sportsbook"
+      },
+      "best_draw": {
+        "bookmaker": "onexbet",
+        "odds": 3.44,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "onexbet",
+        "odds": 1.9,
+        "platform": "sportsbook"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Le Havre",
+      "away_team": "AS Monaco",
+      "league": "Ligue 1 - France",
+      "arb_index": 1.0167126707671896,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "onexbet",
+        "odds": 3.64,
+        "platform": "sportsbook"
+      },
+      "best_draw": {
+        "bookmaker": "onexbet",
+        "odds": 4.01,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "onexbet",
+        "odds": 2.03,
+        "platform": "sportsbook"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Bayern Munich",
+      "away_team": "VfB Stuttgart",
+      "league": "Bundesliga - Germany",
+      "arb_index": 1.0167781862579666,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "onexbet",
+        "odds": 1.32,
+        "platform": "sportsbook"
+      },
+      "best_draw": {
+        "bookmaker": "onexbet",
+        "odds": 6.81,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "onexbet",
+        "odds": 8.9,
+        "platform": "sportsbook"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Barcelona",
+      "away_team": "Athletic Bilbao",
+      "league": "La Liga - Spain",
+      "arb_index": 1.0170719972403024,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "onexbet",
+        "odds": 1.46,
+        "platform": "sportsbook"
+      },
+      "best_draw": {
+        "bookmaker": "onexbet",
+        "odds": 5.03,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "onexbet",
+        "odds": 7.5,
+        "platform": "sportsbook"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Bodø/Glimt",
+      "away_team": "Fredrikstad FK",
+      "league": "Eliteserien - Norway",
+      "arb_index": 1.017121848739496,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "betfair_ex_uk",
+        "odds": 1.19,
+        "platform": "exchange"
+      },
+      "best_draw": {
+        "bookmaker": "onexbet",
+        "odds": 8.75,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "betfair_ex_uk",
+        "odds": 16.0,
+        "platform": "exchange"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Elversberg",
+      "away_team": "Bayer Leverkusen",
+      "league": "Bundesliga - Germany",
+      "arb_index": 1.0176962331811077,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "onexbet",
+        "odds": 5.53,
+        "platform": "sportsbook"
+      },
+      "best_draw": {
+        "bookmaker": "onexbet",
+        "odds": 4.72,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "onexbet",
+        "odds": 1.6,
+        "platform": "sportsbook"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Manchester City",
+      "away_team": "Bournemouth",
+      "league": "EPL",
+      "arb_index": 1.017741370794806,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "onexbet",
+        "odds": 1.48,
+        "platform": "sportsbook"
+      },
+      "best_draw": {
+        "bookmaker": "onexbet",
+        "odds": 5.28,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "onexbet",
+        "odds": 6.55,
+        "platform": "sportsbook"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Mjällby AIF",
+      "away_team": "Västerås SK",
+      "league": "Allsvenskan - Sweden",
+      "arb_index": 1.019421060404667,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "betfair_ex_uk",
+        "odds": 1.83,
+        "platform": "exchange"
+      },
+      "best_draw": {
+        "bookmaker": "pinnacle",
+        "odds": 4.07,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "smarkets",
+        "odds": 4.4,
+        "platform": "exchange"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Fortaleza",
+      "away_team": "Grêmio Novorizontino",
+      "league": "Brazil Série B",
+      "arb_index": 1.0196373584075662,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "onexbet",
+        "odds": 2.1,
+        "platform": "sportsbook"
+      },
+      "best_draw": {
+        "bookmaker": "unibet",
+        "odds": 3.2,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "pinnacle",
+        "odds": 4.33,
+        "platform": "sportsbook"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Rīga FC",
+      "away_team": "Ararat-Armenia FA",
+      "league": "ucl-2025",
+      "arb_index": 1.02,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "polymarket",
+        "odds": 1.7544,
+        "platform": "prediction"
+      },
+      "best_draw": {
+        "bookmaker": "polymarket",
+        "odds": 4.0,
+        "platform": "prediction"
+      },
+      "best_away": {
+        "bookmaker": "polymarket",
+        "odds": 5.0,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Kuopion PS",
+      "away_team": "FK Vardar Skopje",
+      "league": "ucl-2025",
+      "arb_index": 1.02,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "polymarket",
+        "odds": 1.6129,
+        "platform": "prediction"
+      },
+      "best_draw": {
+        "bookmaker": "polymarket",
+        "odds": 4.5455,
+        "platform": "prediction"
+      },
+      "best_away": {
+        "bookmaker": "polymarket",
+        "odds": 5.5556,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "The New Saints FC",
+      "away_team": "Sabah FK",
+      "league": "ucl-2025",
+      "arb_index": 1.02,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "polymarket",
+        "odds": 5.2632,
+        "platform": "prediction"
+      },
+      "best_draw": {
+        "bookmaker": "polymarket",
+        "odds": 4.3478,
+        "platform": "prediction"
+      },
+      "best_away": {
+        "bookmaker": "polymarket",
+        "odds": 1.6667,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Inter Club d'Escaldes",
+      "away_team": "Lincoln Red Imps FC",
+      "league": "ucl-2025",
+      "arb_index": 1.02,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "polymarket",
+        "odds": 1.7544,
+        "platform": "prediction"
+      },
+      "best_draw": {
+        "bookmaker": "polymarket",
+        "odds": 4.3478,
+        "platform": "prediction"
+      },
+      "best_away": {
+        "bookmaker": "polymarket",
+        "odds": 4.5455,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "PFK Levski Sofia",
+      "away_team": "FK Borac Banja Luka",
+      "league": "ucl-2025",
+      "arb_index": 1.02,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "polymarket",
+        "odds": 1.3514,
+        "platform": "prediction"
+      },
+      "best_draw": {
+        "bookmaker": "polymarket",
+        "odds": 5.0,
+        "platform": "prediction"
+      },
+      "best_away": {
+        "bookmaker": "polymarket",
+        "odds": 12.5,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "ETO FC",
+      "away_team": "KF Víkingur",
+      "league": "ucl-2025",
+      "arb_index": 1.02,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "polymarket",
+        "odds": 1.7544,
+        "platform": "prediction"
+      },
+      "best_draw": {
+        "bookmaker": "polymarket",
+        "odds": 4.5455,
+        "platform": "prediction"
+      },
+      "best_away": {
+        "bookmaker": "polymarket",
+        "odds": 4.3478,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Universitatea Craiova CS",
+      "away_team": "FK ML Viciebsk",
+      "league": "ucl-2025",
+      "arb_index": 1.02,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "polymarket",
+        "odds": 1.2987,
+        "platform": "prediction"
+      },
+      "best_draw": {
+        "bookmaker": "polymarket",
+        "odds": 5.8824,
+        "platform": "prediction"
+      },
+      "best_away": {
+        "bookmaker": "polymarket",
+        "odds": 12.5,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Vålerenga Fotball",
+      "away_team": "Aalesunds FK",
+      "league": "norway-eliteserien",
+      "arb_index": 1.02,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "polymarket",
+        "odds": 1.7857,
+        "platform": "prediction"
+      },
+      "best_draw": {
+        "bookmaker": "polymarket",
+        "odds": 4.3478,
+        "platform": "prediction"
+      },
+      "best_away": {
+        "bookmaker": "polymarket",
+        "odds": 4.3478,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "FK Bodø/Glimt",
+      "away_team": "Fredrikstad FK",
+      "league": "norway-eliteserien",
+      "arb_index": 1.02,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "polymarket",
+        "odds": 1.1905,
+        "platform": "prediction"
+      },
+      "best_draw": {
+        "bookmaker": "polymarket",
+        "odds": 8.3333,
+        "platform": "prediction"
+      },
+      "best_away": {
+        "bookmaker": "polymarket",
+        "odds": 16.6667,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Viking FK",
+      "away_team": "Sandefjord Fotball",
+      "league": "norway-eliteserien",
+      "arb_index": 1.02,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "polymarket",
+        "odds": 1.3158,
+        "platform": "prediction"
+      },
+      "best_draw": {
+        "bookmaker": "polymarket",
+        "odds": 6.25,
+        "platform": "prediction"
+      },
+      "best_away": {
+        "bookmaker": "polymarket",
+        "odds": 10.0,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Mjallby AIF",
+      "away_team": "Vasteraas SK",
+      "league": "sweden-allsvenskan-2026",
+      "arb_index": 1.02,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "polymarket",
+        "odds": 1.8868,
+        "platform": "prediction"
+      },
+      "best_draw": {
+        "bookmaker": "polymarket",
+        "odds": 4.1667,
+        "platform": "prediction"
+      },
+      "best_away": {
+        "bookmaker": "polymarket",
+        "odds": 4.0,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Fluminense FC",
+      "away_team": "Red Bull Bragantino",
+      "league": "brazil-serie-a",
+      "arb_index": 1.02,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "polymarket",
+        "odds": 2.0408,
+        "platform": "prediction"
+      },
+      "best_draw": {
+        "bookmaker": "polymarket",
+        "odds": 3.3333,
+        "platform": "prediction"
+      },
+      "best_away": {
+        "bookmaker": "polymarket",
+        "odds": 4.3478,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Mirassol FC",
+      "away_team": "Grêmio FBPA",
+      "league": "brazil-serie-a",
+      "arb_index": 1.02,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "polymarket",
+        "odds": 2.0408,
+        "platform": "prediction"
+      },
+      "best_draw": {
+        "bookmaker": "polymarket",
+        "odds": 3.4483,
+        "platform": "prediction"
+      },
+      "best_away": {
+        "bookmaker": "polymarket",
+        "odds": 4.1667,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Associação Chapecoense de Futebol",
+      "away_team": "CR Flamengo",
+      "league": "brazil-serie-a",
+      "arb_index": 1.02,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "polymarket",
+        "odds": 7.6923,
+        "platform": "prediction"
+      },
+      "best_draw": {
+        "bookmaker": "polymarket",
+        "odds": 4.3478,
+        "platform": "prediction"
+      },
+      "best_away": {
+        "bookmaker": "polymarket",
+        "odds": 1.5152,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Shamrock",
+      "away_team": "Floriana",
+      "league": "ucl",
+      "arb_index": 1.02,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "kalshi",
+        "odds": 1.2987,
+        "platform": "prediction"
+      },
+      "best_draw": {
+        "bookmaker": "kalshi",
+        "odds": 5.8824,
+        "platform": "prediction"
+      },
+      "best_away": {
+        "bookmaker": "kalshi",
+        "odds": 12.5,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Levski Sofia",
+      "away_team": "Banja Luka",
+      "league": "ucl",
+      "arb_index": 1.02,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "kalshi",
+        "odds": 1.3514,
+        "platform": "prediction"
+      },
+      "best_draw": {
+        "bookmaker": "kalshi",
+        "odds": 5.2632,
+        "platform": "prediction"
+      },
+      "best_away": {
+        "bookmaker": "kalshi",
+        "odds": 11.1111,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "ETO Gyor",
+      "away_team": "Vikingur Reykjavik",
+      "league": "ucl",
+      "arb_index": 1.02,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "kalshi",
+        "odds": 1.7544,
+        "platform": "prediction"
+      },
+      "best_draw": {
+        "bookmaker": "kalshi",
+        "odds": 4.5455,
+        "platform": "prediction"
+      },
+      "best_away": {
+        "bookmaker": "kalshi",
+        "odds": 4.3478,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Iberia",
+      "away_team": "Tallinna",
+      "league": "ucl",
+      "arb_index": 1.02,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "kalshi",
+        "odds": 1.5873,
+        "platform": "prediction"
+      },
+      "best_draw": {
+        "bookmaker": "kalshi",
+        "odds": 4.7619,
+        "platform": "prediction"
+      },
+      "best_away": {
+        "bookmaker": "kalshi",
+        "odds": 5.5556,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Kuopion Palloseura",
+      "away_team": "FK Vardar Skopje",
+      "league": "ucl",
+      "arb_index": 1.02,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "kalshi",
+        "odds": 1.5873,
+        "platform": "prediction"
+      },
+      "best_draw": {
+        "bookmaker": "kalshi",
+        "odds": 4.5455,
+        "platform": "prediction"
+      },
+      "best_away": {
+        "bookmaker": "kalshi",
+        "odds": 5.8824,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Golden State",
+      "away_team": "Indiana",
+      "league": "wnba",
+      "arb_index": 1.02,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "kalshi",
+        "odds": 2.0,
+        "platform": "prediction"
+      },
+      "best_draw": {},
+      "best_away": {
+        "bookmaker": "kalshi",
+        "odds": 1.9231,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Los Angeles",
+      "away_team": "Minnesota",
+      "league": "wnba",
+      "arb_index": 1.02,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "kalshi",
+        "odds": 5.8824,
+        "platform": "prediction"
+      },
+      "best_draw": {},
+      "best_away": {
+        "bookmaker": "kalshi",
+        "odds": 1.1765,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Portland",
+      "away_team": "Connecticut",
+      "league": "wnba",
+      "arb_index": 1.02,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "kalshi",
+        "odds": 2.0,
+        "platform": "prediction"
+      },
+      "best_draw": {},
+      "best_away": {
+        "bookmaker": "kalshi",
+        "odds": 1.9231,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Travaglia",
+      "away_team": "Krumich",
+      "league": "atp",
+      "arb_index": 1.02,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "kalshi",
+        "odds": 2.3256,
+        "platform": "prediction"
+      },
+      "best_draw": {},
+      "best_away": {
+        "bookmaker": "kalshi",
+        "odds": 1.6949,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Vallejo",
+      "away_team": "Damas",
+      "league": "atp",
+      "arb_index": 1.02,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "kalshi",
+        "odds": 1.2195,
+        "platform": "prediction"
+      },
+      "best_draw": {},
+      "best_away": {
+        "bookmaker": "kalshi",
+        "odds": 5.0,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "ToPo",
+      "away_team": "Ugo Carabelli",
+      "league": "atp",
+      "arb_index": 1.02,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "kalshi",
+        "odds": 3.3333,
+        "platform": "prediction"
+      },
+      "best_draw": {},
+      "best_away": {
+        "bookmaker": "kalshi",
+        "odds": 1.3889,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Cina",
+      "away_team": "Halys",
+      "league": "atp",
+      "arb_index": 1.02,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "kalshi",
+        "odds": 2.0833,
+        "platform": "prediction"
+      },
+      "best_draw": {},
+      "best_away": {
+        "bookmaker": "kalshi",
+        "odds": 1.8519,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Dodig",
+      "away_team": "Carreno Busta",
+      "league": "atp",
+      "arb_index": 1.02,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "kalshi",
+        "odds": 3.3333,
+        "platform": "prediction"
+      },
+      "best_draw": {},
+      "best_away": {
+        "bookmaker": "kalshi",
+        "odds": 1.3889,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Sesko",
+      "away_team": "Merida",
+      "league": "atp",
+      "arb_index": 1.02,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "kalshi",
+        "odds": 6.6667,
+        "platform": "prediction"
+      },
+      "best_draw": {},
+      "best_away": {
+        "bookmaker": "kalshi",
+        "odds": 1.1494,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Molcan",
+      "away_team": "Royer",
+      "league": "atp",
+      "arb_index": 1.02,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "kalshi",
+        "odds": 1.6393,
+        "platform": "prediction"
+      },
+      "best_draw": {},
+      "best_away": {
+        "bookmaker": "kalshi",
+        "odds": 2.439,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Faria",
+      "away_team": "Wawrinka",
+      "league": "atp",
+      "arb_index": 1.02,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "kalshi",
+        "odds": 1.5152,
+        "platform": "prediction"
+      },
+      "best_draw": {},
+      "best_away": {
+        "bookmaker": "kalshi",
+        "odds": 2.7778,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Amariei",
+      "away_team": "Jacquemot",
+      "league": "wta",
+      "arb_index": 1.02,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "kalshi",
+        "odds": 5.8824,
+        "platform": "prediction"
+      },
+      "best_draw": {},
+      "best_away": {
+        "bookmaker": "kalshi",
+        "odds": 1.1765,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Sakellaridi",
+      "away_team": "Tona",
+      "league": "wta",
+      "arb_index": 1.02,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "kalshi",
+        "odds": 1.6393,
+        "platform": "prediction"
+      },
+      "best_draw": {},
+      "best_away": {
+        "bookmaker": "kalshi",
+        "odds": 2.439,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Londrina",
+      "away_team": "Botafogo",
+      "league": "Brazil Série B",
+      "arb_index": 1.0207399800846404,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "unibet",
+        "odds": 2.6,
+        "platform": "sportsbook"
+      },
+      "best_draw": {
+        "bookmaker": "pinnacle",
+        "odds": 3.09,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "pinnacle",
+        "odds": 3.2,
+        "platform": "sportsbook"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Clube de Regatas Brasil",
+      "away_team": "Nautico PE",
+      "league": "Brazil Série B",
+      "arb_index": 1.0232165668784872,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "pinnacle",
+        "odds": 2.01,
+        "platform": "sportsbook"
+      },
+      "best_draw": {
+        "bookmaker": "unibet",
+        "odds": 3.45,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "pinnacle",
+        "odds": 4.24,
+        "platform": "sportsbook"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "IFK Goteborg",
+      "away_team": "IF Brommapojkarna",
+      "league": "Allsvenskan - Sweden",
+      "arb_index": 1.0245449714361632,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "betfair_ex_uk",
+        "odds": 1.93,
+        "platform": "exchange"
+      },
+      "best_draw": {
+        "bookmaker": "betfair_ex_uk",
+        "odds": 3.9,
+        "platform": "exchange"
+      },
+      "best_away": {
+        "bookmaker": "polymarket",
+        "odds": 4.0,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Halmstads BK",
+      "away_team": "BK Hacken",
+      "league": "Allsvenskan - Sweden",
+      "arb_index": 1.0273785105103252,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "betfair_ex_uk",
+        "odds": 5.6,
+        "platform": "exchange"
+      },
+      "best_draw": {
+        "bookmaker": "pinnacle",
+        "odds": 4.72,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "onexbet",
+        "odds": 1.57,
+        "platform": "sportsbook"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "AIK",
+      "away_team": "GAIS",
+      "league": "Allsvenskan - Sweden",
+      "arb_index": 1.0287878787878788,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "polymarket",
+        "odds": 2.7027,
+        "platform": "prediction"
+      },
+      "best_draw": {
+        "bookmaker": "polymarket",
+        "odds": 3.5714,
+        "platform": "prediction"
+      },
+      "best_away": {
+        "bookmaker": "betfair_ex_uk",
+        "odds": 2.64,
+        "platform": "exchange"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "England",
+      "away_team": "Argentina",
+      "league": "worldcup",
+      "arb_index": 1.0299999999999998,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "kalshi",
+        "odds": 2.7027,
+        "platform": "prediction"
+      },
+      "best_draw": {
+        "bookmaker": "kalshi",
+        "odds": 2.9412,
+        "platform": "prediction"
+      },
+      "best_away": {
+        "bookmaker": "kalshi",
+        "odds": 3.125,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "IF Elfsborg",
+      "away_team": "IK Sirius",
+      "league": "Allsvenskan - Sweden",
+      "arb_index": 1.03,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "polymarket",
+        "odds": 3.5714,
+        "platform": "prediction"
+      },
+      "best_draw": {
+        "bookmaker": "polymarket",
+        "odds": 3.8462,
+        "platform": "prediction"
+      },
+      "best_away": {
+        "bookmaker": "polymarket",
+        "odds": 2.0408,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Hamarkameratene",
+      "away_team": "Tromsø IL",
+      "league": "norway-eliteserien",
+      "arb_index": 1.03,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "polymarket",
+        "odds": 3.7037,
+        "platform": "prediction"
+      },
+      "best_draw": {
+        "bookmaker": "polymarket",
+        "odds": 3.2258,
+        "platform": "prediction"
+      },
+      "best_away": {
+        "bookmaker": "polymarket",
+        "odds": 2.2222,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "EC Vitória",
+      "away_team": "CR Vasco da Gama",
+      "league": "brazil-serie-a",
+      "arb_index": 1.03,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "polymarket",
+        "odds": 2.381,
+        "platform": "prediction"
+      },
+      "best_draw": {
+        "bookmaker": "polymarket",
+        "odds": 3.3333,
+        "platform": "prediction"
+      },
+      "best_away": {
+        "bookmaker": "polymarket",
+        "odds": 3.2258,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Bissen",
+      "away_team": "Klaksvik",
+      "league": "ucl",
+      "arb_index": 1.03,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "kalshi",
+        "odds": 2.7027,
+        "platform": "prediction"
+      },
+      "best_draw": {
+        "bookmaker": "kalshi",
+        "odds": 3.5714,
+        "platform": "prediction"
+      },
+      "best_away": {
+        "bookmaker": "kalshi",
+        "odds": 2.6316,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Toronto Tempo",
+      "away_team": "Washington Mystics",
+      "league": "WNBA",
+      "arb_index": 1.030736618971913,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "betfair_ex_uk",
+        "odds": 2.04,
+        "platform": "exchange"
+      },
+      "best_draw": {},
+      "best_away": {
+        "bookmaker": "unibet",
+        "odds": 1.85,
+        "platform": "sportsbook"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Kristiansund BK",
+      "away_team": "Sarpsborg FK",
+      "league": "Eliteserien - Norway",
+      "arb_index": 1.0320023534155722,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "pinnacle",
+        "odds": 3.18,
+        "platform": "sportsbook"
+      },
+      "best_draw": {
+        "bookmaker": "pinnacle",
+        "odds": 3.61,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "onexbet",
+        "odds": 2.27,
+        "platform": "sportsbook"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "HamKam",
+      "away_team": "Tromso",
+      "league": "Eliteserien - Norway",
+      "arb_index": 1.0334050391909602,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "pinnacle",
+        "odds": 3.66,
+        "platform": "sportsbook"
+      },
+      "best_draw": {
+        "bookmaker": "onexbet",
+        "odds": 3.25,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "pinnacle",
+        "odds": 2.21,
+        "platform": "sportsbook"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Daejeon Citizen",
+      "away_team": "Ulsan Hyundai FC",
+      "league": "K League 1",
+      "arb_index": 1.0345026379926605,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "pinnacle",
+        "odds": 2.45,
+        "platform": "sportsbook"
+      },
+      "best_draw": {
+        "bookmaker": "pinnacle",
+        "odds": 3.48,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "unibet",
+        "odds": 2.95,
+        "platform": "sportsbook"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Kalmar FF",
+      "away_team": "Malmo FF",
+      "league": "Allsvenskan - Sweden",
+      "arb_index": 1.0351137917677842,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "unibet",
+        "odds": 2.63,
+        "platform": "sportsbook"
+      },
+      "best_draw": {
+        "bookmaker": "betfair_ex_uk",
+        "odds": 3.7,
+        "platform": "exchange"
+      },
+      "best_away": {
+        "bookmaker": "betfair_ex_uk",
+        "odds": 2.6,
+        "platform": "exchange"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "América Mineiro",
+      "away_team": "Ceará",
+      "league": "Brazil Série B",
+      "arb_index": 1.035932846277674,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "unibet",
+        "odds": 2.6,
+        "platform": "sportsbook"
+      },
+      "best_draw": {
+        "bookmaker": "pinnacle",
+        "odds": 3.19,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "pinnacle",
+        "odds": 2.96,
+        "platform": "sportsbook"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Hammarby IF",
+      "away_team": "Degerfors IF",
+      "league": "Allsvenskan - Sweden",
+      "arb_index": 1.0364480471628592,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "polymarket",
+        "odds": 1.2821,
+        "platform": "prediction"
+      },
+      "best_draw": {
+        "bookmaker": "betfair_ex_uk",
+        "odds": 5.9,
+        "platform": "exchange"
+      },
+      "best_away": {
+        "bookmaker": "betfair_ex_uk",
+        "odds": 11.5,
+        "platform": "exchange"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Criciuma",
+      "away_team": "Vila Nova",
+      "league": "Brazil Série B",
+      "arb_index": 1.037046287046287,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "pinnacle",
+        "odds": 1.76,
+        "platform": "sportsbook"
+      },
+      "best_draw": {
+        "bookmaker": "unibet",
+        "odds": 3.5,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "pinnacle",
+        "odds": 5.46,
+        "platform": "sportsbook"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Vålerenga",
+      "away_team": "Aalesund",
+      "league": "Eliteserien - Norway",
+      "arb_index": 1.037086944063688,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "betfair_ex_uk",
+        "odds": 1.75,
+        "platform": "exchange"
+      },
+      "best_draw": {
+        "bookmaker": "smarkets",
+        "odds": 4.3,
+        "platform": "exchange"
+      },
+      "best_away": {
+        "bookmaker": "onexbet",
+        "odds": 4.29,
+        "platform": "sportsbook"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "IK Start",
+      "away_team": "Rosenborg",
+      "league": "Eliteserien - Norway",
+      "arb_index": 1.0382621302614368,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "betfair_ex_uk",
+        "odds": 3.1,
+        "platform": "exchange"
+      },
+      "best_draw": {
+        "bookmaker": "pinnacle",
+        "odds": 3.56,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "onexbet",
+        "odds": 2.3,
+        "platform": "sportsbook"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "EC Bahia",
+      "away_team": "Associação Chapecoense de Futebol",
+      "league": "brazil-serie-a",
+      "arb_index": 1.0399999999999998,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "polymarket",
+        "odds": 1.4493,
+        "platform": "prediction"
+      },
+      "best_draw": {
+        "bookmaker": "polymarket",
+        "odds": 5.0,
+        "platform": "prediction"
+      },
+      "best_away": {
+        "bookmaker": "polymarket",
+        "odds": 6.6667,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Molde FK",
+      "away_team": "SK Brann",
+      "league": "norway-eliteserien",
+      "arb_index": 1.04,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "polymarket",
+        "odds": 2.1277,
+        "platform": "prediction"
+      },
+      "best_draw": {
+        "bookmaker": "polymarket",
+        "odds": 3.8462,
+        "platform": "prediction"
+      },
+      "best_away": {
+        "bookmaker": "polymarket",
+        "odds": 3.2258,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "IK Start",
+      "away_team": "Rosenborg BK",
+      "league": "norway-eliteserien",
+      "arb_index": 1.04,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "polymarket",
+        "odds": 3.125,
+        "platform": "prediction"
+      },
+      "best_draw": {
+        "bookmaker": "polymarket",
+        "odds": 3.5714,
+        "platform": "prediction"
+      },
+      "best_away": {
+        "bookmaker": "polymarket",
+        "odds": 2.2727,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "IC Escaldes",
+      "away_team": "Lincoln Red Imps",
+      "league": "ucl",
+      "arb_index": 1.04,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "kalshi",
+        "odds": 1.7241,
+        "platform": "prediction"
+      },
+      "best_draw": {
+        "bookmaker": "kalshi",
+        "odds": 4.3478,
+        "platform": "prediction"
+      },
+      "best_away": {
+        "bookmaker": "kalshi",
+        "odds": 4.3478,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Rinderknech",
+      "away_team": "Tabur",
+      "league": "atp",
+      "arb_index": 1.04,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "kalshi",
+        "odds": 1.4085,
+        "platform": "prediction"
+      },
+      "best_draw": {},
+      "best_away": {
+        "bookmaker": "kalshi",
+        "odds": 3.0303,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Sport Recife",
+      "away_team": "Operario PR",
+      "league": "Brazil Série B",
+      "arb_index": 1.0403950057033973,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "unibet",
+        "odds": 1.91,
+        "platform": "sportsbook"
+      },
+      "best_draw": {
+        "bookmaker": "unibet",
+        "odds": 3.4,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "pinnacle",
+        "odds": 4.49,
+        "platform": "sportsbook"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Viking FK",
+      "away_team": "Sandefjord",
+      "league": "Eliteserien - Norway",
+      "arb_index": 1.0404629749867633,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "onexbet",
+        "odds": 1.31,
+        "platform": "sportsbook"
+      },
+      "best_draw": {
+        "bookmaker": "pinnacle",
+        "odds": 6.07,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "onexbet",
+        "odds": 8.9,
+        "platform": "sportsbook"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Minnesota Lynx",
+      "away_team": "Los Angeles Sparks",
+      "league": "WNBA",
+      "arb_index": 1.0422049956933677,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "onexbet",
+        "odds": 1.08,
+        "platform": "sportsbook"
+      },
+      "best_draw": {},
+      "best_away": {
+        "bookmaker": "onexbet",
+        "odds": 8.6,
+        "platform": "sportsbook"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "São Bernardo",
+      "away_team": "Avai",
+      "league": "Brazil Série B",
+      "arb_index": 1.0427776006983631,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "pinnacle",
+        "odds": 1.96,
+        "platform": "sportsbook"
+      },
+      "best_draw": {
+        "bookmaker": "unibet",
+        "odds": 3.45,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "pinnacle",
+        "odds": 4.12,
+        "platform": "sportsbook"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Chicago Sky",
+      "away_team": "Seattle Storm",
+      "league": "WNBA",
+      "arb_index": 1.042815865510901,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "onexbet",
+        "odds": 1.62,
+        "platform": "sportsbook"
+      },
+      "best_draw": {},
+      "best_away": {
+        "bookmaker": "onexbet",
+        "odds": 2.35,
+        "platform": "sportsbook"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Lillestrom",
+      "away_team": "KFUM",
+      "league": "Eliteserien - Norway",
+      "arb_index": 1.0430532550318727,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "betfair_ex_uk",
+        "odds": 1.74,
+        "platform": "exchange"
+      },
+      "best_draw": {
+        "bookmaker": "pinnacle",
+        "odds": 4.0,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "pinnacle",
+        "odds": 4.58,
+        "platform": "sportsbook"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Gangwon FC",
+      "away_team": "Sangju Sangmu FC",
+      "league": "K League 1",
+      "arb_index": 1.0453804323695899,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "williamhill",
+        "odds": 1.85,
+        "platform": "sportsbook"
+      },
+      "best_draw": {
+        "bookmaker": "pinnacle",
+        "odds": 3.63,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "pinnacle",
+        "odds": 4.36,
+        "platform": "sportsbook"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Juventude",
+      "away_team": "Cuiabá",
+      "league": "Brazil Série B",
+      "arb_index": 1.046620228323059,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "pinnacle",
+        "odds": 2.01,
+        "platform": "sportsbook"
+      },
+      "best_draw": {
+        "bookmaker": "unibet",
+        "odds": 3.05,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "pinnacle",
+        "odds": 4.52,
+        "platform": "sportsbook"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Molde",
+      "away_team": "SK Brann",
+      "league": "Eliteserien - Norway",
+      "arb_index": 1.0468846051544158,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "onexbet",
+        "odds": 2.1,
+        "platform": "sportsbook"
+      },
+      "best_draw": {
+        "bookmaker": "onexbet",
+        "odds": 3.83,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "onexbet",
+        "odds": 3.23,
+        "platform": "sportsbook"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Ponte Preta",
+      "away_team": "Goiás",
+      "league": "Brazil Série B",
+      "arb_index": 1.04831525137468,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "pinnacle",
+        "odds": 4.98,
+        "platform": "sportsbook"
+      },
+      "best_draw": {
+        "bookmaker": "unibet",
+        "odds": 3.5,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "pinnacle",
+        "odds": 1.78,
+        "platform": "sportsbook"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Bucheon FC 1995",
+      "away_team": "FC Seoul",
+      "league": "K League 1",
+      "arb_index": 1.0485515320334262,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "polymarket",
+        "odds": 5.0,
+        "platform": "prediction"
+      },
+      "best_draw": {
+        "bookmaker": "pinnacle",
+        "odds": 3.59,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "polymarket",
+        "odds": 1.7544,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Jeju United FC",
+      "away_team": "Pohang Steelers",
+      "league": "K League 1",
+      "arb_index": 1.0486998283689724,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "pinnacle",
+        "odds": 2.91,
+        "platform": "sportsbook"
+      },
+      "best_draw": {
+        "bookmaker": "pinnacle",
+        "odds": 3.15,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "pinnacle",
+        "odds": 2.58,
+        "platform": "sportsbook"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Incheon United",
+      "away_team": "Jeonbuk Hyundai Motors",
+      "league": "K League 1",
+      "arb_index": 1.0498983415192535,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "pinnacle",
+        "odds": 3.17,
+        "platform": "sportsbook"
+      },
+      "best_draw": {
+        "bookmaker": "pinnacle",
+        "odds": 3.2,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "pinnacle",
+        "odds": 2.37,
+        "platform": "sportsbook"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Lillestrøm SK",
+      "away_team": "KFUM-Kameratene Oslo",
+      "league": "norway-eliteserien",
+      "arb_index": 1.0499999999999998,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "polymarket",
+        "odds": 1.7241,
+        "platform": "prediction"
+      },
+      "best_draw": {
+        "bookmaker": "polymarket",
+        "odds": 4.0,
+        "platform": "prediction"
+      },
+      "best_away": {
+        "bookmaker": "polymarket",
+        "odds": 4.5455,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Daejeon Hana Citizen FC",
+      "away_team": "Ulsan HD FC",
+      "league": "k-league",
+      "arb_index": 1.0499999999999998,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "polymarket",
+        "odds": 2.439,
+        "platform": "prediction"
+      },
+      "best_draw": {
+        "bookmaker": "polymarket",
+        "odds": 3.4483,
+        "platform": "prediction"
+      },
+      "best_away": {
+        "bookmaker": "polymarket",
+        "odds": 2.8571,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "CA Mineiro",
+      "away_team": "EC Bahia",
+      "league": "brazil-serie-a",
+      "arb_index": 1.05,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "polymarket",
+        "odds": 2.1277,
+        "platform": "prediction"
+      },
+      "best_draw": {
+        "bookmaker": "polymarket",
+        "odds": 3.3333,
+        "platform": "prediction"
+      },
+      "best_away": {
+        "bookmaker": "polymarket",
+        "odds": 3.5714,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "SC Internacional",
+      "away_team": "Cruzeiro EC",
+      "league": "brazil-serie-a",
+      "arb_index": 1.05,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "polymarket",
+        "odds": 2.2222,
+        "platform": "prediction"
+      },
+      "best_draw": {
+        "bookmaker": "polymarket",
+        "odds": 3.3333,
+        "platform": "prediction"
+      },
+      "best_away": {
+        "bookmaker": "polymarket",
+        "odds": 3.3333,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "São Paulo FC",
+      "away_team": "CA Paranaense",
+      "league": "brazil-serie-a",
+      "arb_index": 1.05,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "polymarket",
+        "odds": 2.0408,
+        "platform": "prediction"
+      },
+      "best_draw": {
+        "bookmaker": "polymarket",
+        "odds": 3.2258,
+        "platform": "prediction"
+      },
+      "best_away": {
+        "bookmaker": "polymarket",
+        "odds": 4.0,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Jeju SK FC",
+      "away_team": "Pohang Steelers FC",
+      "league": "k-league",
+      "arb_index": 1.05,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "polymarket",
+        "odds": 2.9412,
+        "platform": "prediction"
+      },
+      "best_draw": {
+        "bookmaker": "polymarket",
+        "odds": 3.125,
+        "platform": "prediction"
+      },
+      "best_away": {
+        "bookmaker": "polymarket",
+        "odds": 2.5641,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Incheon United FC",
+      "away_team": "Jeonbuk Hyundai Motors FC",
+      "league": "k-league",
+      "arb_index": 1.05,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "polymarket",
+        "odds": 3.125,
+        "platform": "prediction"
+      },
+      "best_draw": {
+        "bookmaker": "polymarket",
+        "odds": 3.2258,
+        "platform": "prediction"
+      },
+      "best_away": {
+        "bookmaker": "polymarket",
+        "odds": 2.381,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Sutjeska Niksic",
+      "away_team": "Kairat",
+      "league": "ucl",
+      "arb_index": 1.05,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "kalshi",
+        "odds": 4.5455,
+        "platform": "prediction"
+      },
+      "best_draw": {
+        "bookmaker": "kalshi",
+        "odds": 3.8462,
+        "platform": "prediction"
+      },
+      "best_away": {
+        "bookmaker": "kalshi",
+        "odds": 1.7544,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "FC Anyang",
+      "away_team": "Gwangju FC",
+      "league": "K League 1",
+      "arb_index": 1.0532413974257946,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "pinnacle",
+        "odds": 1.62,
+        "platform": "sportsbook"
+      },
+      "best_draw": {
+        "bookmaker": "pinnacle",
+        "odds": 3.76,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "polymarket",
+        "odds": 5.8824,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Bologna",
+      "away_team": "Lazio",
+      "league": "Serie A - Italy",
+      "arb_index": 1.054988888255741,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "pinnacle",
+        "odds": 2.18,
+        "platform": "sportsbook"
+      },
+      "best_draw": {
+        "bookmaker": "pinnacle",
+        "odds": 3.22,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "unibet",
+        "odds": 3.5,
+        "platform": "sportsbook"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Atletico Goianiense",
+      "away_team": "Athletic Club (MG)",
+      "league": "Brazil Série B",
+      "arb_index": 1.0553451178451179,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "pinnacle",
+        "odds": 1.92,
+        "platform": "sportsbook"
+      },
+      "best_draw": {
+        "bookmaker": "unibet",
+        "odds": 3.3,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "pinnacle",
+        "odds": 4.32,
+        "platform": "sportsbook"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Kristiansund BK",
+      "away_team": "Sarpsborg 08 FF",
+      "league": "norway-eliteserien",
+      "arb_index": 1.06,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "polymarket",
+        "odds": 3.0303,
+        "platform": "prediction"
+      },
+      "best_draw": {
+        "bookmaker": "polymarket",
+        "odds": 3.5714,
+        "platform": "prediction"
+      },
+      "best_away": {
+        "bookmaker": "polymarket",
+        "odds": 2.2222,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Gangwon FC",
+      "away_team": "Gimcheon Sangmu FC",
+      "league": "k-league",
+      "arb_index": 1.06,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "polymarket",
+        "odds": 1.8182,
+        "platform": "prediction"
+      },
+      "best_draw": {
+        "bookmaker": "polymarket",
+        "odds": 3.5714,
+        "platform": "prediction"
+      },
+      "best_away": {
+        "bookmaker": "polymarket",
+        "odds": 4.3478,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Egnatia Rrogozhine",
+      "away_team": "Petrocub Hincesti",
+      "league": "ucl",
+      "arb_index": 1.06,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "kalshi",
+        "odds": 1.7857,
+        "platform": "prediction"
+      },
+      "best_draw": {
+        "bookmaker": "kalshi",
+        "odds": 3.4483,
+        "platform": "prediction"
+      },
+      "best_away": {
+        "bookmaker": "kalshi",
+        "odds": 4.7619,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Uni Craiova",
+      "away_team": "Maxline Vitebsk",
+      "league": "ucl",
+      "arb_index": 1.06,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "kalshi",
+        "odds": 1.2821,
+        "platform": "prediction"
+      },
+      "best_draw": {
+        "bookmaker": "kalshi",
+        "odds": 5.5556,
+        "platform": "prediction"
+      },
+      "best_away": {
+        "bookmaker": "kalshi",
+        "odds": 10.0,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Le Havre",
+      "away_team": "AS Monaco",
+      "league": "Ligue 1 - France",
+      "arb_index": 1.0607622617931898,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "betfair_ex_uk",
+        "odds": 3.3,
+        "platform": "exchange"
+      },
+      "best_draw": {
+        "bookmaker": "pinnacle",
+        "odds": 3.88,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "betfair_ex_uk",
+        "odds": 2.0,
+        "platform": "exchange"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Torino",
+      "away_team": "AC Milan",
+      "league": "Serie A - Italy",
+      "arb_index": 1.063635115006824,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "pinnacle",
+        "odds": 4.36,
+        "platform": "sportsbook"
+      },
+      "best_draw": {
+        "bookmaker": "pinnacle",
+        "odds": 3.67,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "pinnacle",
+        "odds": 1.78,
+        "platform": "sportsbook"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Atalanta BC",
+      "away_team": "Sassuolo",
+      "league": "Serie A - Italy",
+      "arb_index": 1.0672182628660312,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "pinnacle",
+        "odds": 1.52,
+        "platform": "sportsbook"
+      },
+      "best_draw": {
+        "bookmaker": "pinnacle",
+        "odds": 4.31,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "pinnacle",
+        "odds": 5.64,
+        "platform": "sportsbook"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Angers",
+      "away_team": "Lille",
+      "league": "Ligue 1 - France",
+      "arb_index": 1.0673064171198265,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "pinnacle",
+        "odds": 4.92,
+        "platform": "sportsbook"
+      },
+      "best_draw": {
+        "bookmaker": "pinnacle",
+        "odds": 3.77,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "pinnacle",
+        "odds": 1.67,
+        "platform": "sportsbook"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "AS Roma",
+      "away_team": "Fiorentina",
+      "league": "Serie A - Italy",
+      "arb_index": 1.067731975578454,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "pinnacle",
+        "odds": 1.51,
+        "platform": "sportsbook"
+      },
+      "best_draw": {
+        "bookmaker": "pinnacle",
+        "odds": 4.14,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "unibet",
+        "odds": 6.1,
+        "platform": "sportsbook"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Paris Saint Germain",
+      "away_team": "Rennes",
+      "league": "Ligue 1 - France",
+      "arb_index": 1.0682988482352005,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "pinnacle",
+        "odds": 1.4,
+        "platform": "sportsbook"
+      },
+      "best_draw": {
+        "bookmaker": "pinnacle",
+        "odds": 5.21,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "pinnacle",
+        "odds": 6.17,
+        "platform": "sportsbook"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Coritiba FBC",
+      "away_team": "SE Palmeiras",
+      "league": "brazil-serie-a",
+      "arb_index": 1.08,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "polymarket",
+        "odds": 3.4483,
+        "platform": "prediction"
+      },
+      "best_draw": {
+        "bookmaker": "polymarket",
+        "odds": 3.125,
+        "platform": "prediction"
+      },
+      "best_away": {
+        "bookmaker": "polymarket",
+        "odds": 2.1277,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Venezia",
+      "away_team": "Lecce",
+      "league": "Serie A - Italy",
+      "arb_index": 1.1041681981915756,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "unibet",
+        "odds": 2.23,
+        "platform": "sportsbook"
+      },
+      "best_draw": {
+        "bookmaker": "unibet",
+        "odds": 3.05,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "unibet",
+        "odds": 3.05,
+        "platform": "sportsbook"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Frosinone",
+      "away_team": "Juventus",
+      "league": "Serie A - Italy",
+      "arb_index": 1.1093722971804185,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "unibet",
+        "odds": 6.4,
+        "platform": "sportsbook"
+      },
+      "best_draw": {
+        "bookmaker": "unibet",
+        "odds": 4.1,
+        "platform": "sportsbook"
+      },
+      "best_away": {
+        "bookmaker": "unibet",
+        "odds": 1.41,
+        "platform": "sportsbook"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Jeju SK FC",
+      "away_team": "Gangwon FC",
+      "league": "k-league",
+      "arb_index": 1.3900000000000001,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "polymarket",
+        "odds": 4.1667,
+        "platform": "prediction"
+      },
+      "best_draw": {
+        "bookmaker": "polymarket",
+        "odds": 2.8571,
+        "platform": "prediction"
+      },
+      "best_away": {
+        "bookmaker": "polymarket",
+        "odds": 1.25,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Ulsan HD FC",
+      "away_team": "Incheon United FC",
+      "league": "k-league",
+      "arb_index": 2.23,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "polymarket",
+        "odds": 1.2821,
+        "platform": "prediction"
+      },
+      "best_draw": {
+        "bookmaker": "polymarket",
+        "odds": 1.3333,
+        "platform": "prediction"
+      },
+      "best_away": {
+        "bookmaker": "polymarket",
+        "odds": 1.4286,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    },
+    {
+      "home_team": "Jeonbuk Hyundai Motors FC",
+      "away_team": "Daejeon Hana Citizen FC",
+      "league": "k-league",
+      "arb_index": 2.25,
+      "profit_pct": 0.0,
+      "best_home": {
+        "bookmaker": "polymarket",
+        "odds": 1.2048,
+        "platform": "prediction"
+      },
+      "best_draw": {
+        "bookmaker": "polymarket",
+        "odds": 1.3333,
+        "platform": "prediction"
+      },
+      "best_away": {
+        "bookmaker": "polymarket",
+        "odds": 1.4925,
+        "platform": "prediction"
+      },
+      "tradeable": false
+    }
+  ],
+  "scan_duration_sec": 99.85722208023071
+}
