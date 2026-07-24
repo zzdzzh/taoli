@@ -17,14 +17,15 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>套利扫描报告</title>
+<title>跨平台套利扫描 · 实时报告</title>
 <meta http-equiv="refresh" content="60">
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #1a1a2e; color: #e0e0e0; display: flex; min-height: 100vh; }
 .menu-toggle { display: none; position: fixed; top: 10px; left: 10px; z-index: 100; background: #e94560; color: #fff; border: none; width: 36px; height: 36px; border-radius: 6px; font-size: 20px; cursor: pointer; }
 .sidebar { width: 260px; background: #16213e; padding: 20px; flex-shrink: 0; overflow-y: auto; transition: transform 0.3s; }
-.sidebar h2 { color: #e94560; font-size: 18px; margin-bottom: 16px; }
+.sidebar h2 { color: #e94560; font-size: 18px; margin-bottom: 8px; }
+.sidebar .subtitle { color: #888; font-size: 12px; line-height: 1.5; margin-bottom: 16px; }
 .sidebar .date-group { margin-bottom: 12px; }
 .sidebar .date-label { color: #aaa; font-size: 13px; margin-bottom: 4px; }
 .sidebar a { display: block; color: #7ec8e3; text-decoration: none; font-size: 13px; padding: 4px 8px; border-radius: 4px; }
@@ -74,7 +75,8 @@ function toggleSidebar() {
 <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
 <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
 <div class="sidebar">
-    <h2>套利报告</h2>
+    <h2>套利扫描</h2>
+    <div class="subtitle">Odds API + Polymarket + Kalshi<br>每 60 秒自动刷新页面</div>
     <div class="date-group">
         <a href="/" class="{{ 'active' if not selected else '' }}">最新报告</a>
     </div>
@@ -88,7 +90,7 @@ function toggleSidebar() {
     {% endfor %}
 </div>
 <div class="content">
-{{ content|safe if content else '<div class="empty">暂无报告数据，请先运行 python simulate.py live</div>' }}
+{{ content|safe if content else '<div class="empty">暂无报告数据<br>请在服务器运行：python3 simulate.py live</div>' }}
 </div>
 </body>
 </html>"""
