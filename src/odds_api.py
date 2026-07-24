@@ -139,13 +139,19 @@ class OddsAPIClient:
                     outcome_key = self._map_outcome(name, home, away)
                     if outcome_key is None:
                         continue
+                    if bk_key in ("polymarket", "kalshi"):
+                        platform = "prediction"
+                    elif is_exchange(bk_key):
+                        platform = "exchange"
+                    else:
+                        platform = "sportsbook"
                     quotes.append(
                         OddsQuote(
                             bookmaker=bk_key,
                             outcome=outcome_key,
                             odds=price,
                             outcome_name=name,
-                            platform="exchange" if is_exchange(bk_key) else "sportsbook",
+                            platform=platform,
                         )
                     )
 

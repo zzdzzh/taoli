@@ -13,14 +13,15 @@ EXCHANGE_BOOKMAKERS: frozenset[str] = frozenset({
     "matchbook",
 })
 
-# 默认佣金：对净盈利收取的百分比
+# 默认佣金：对净盈利收取的百分比（套利扣费取偏保守上限）
+# Pinnacle/Bet365/Unibet/WH/1xBet 盈利佣金 0%，不在此表
 DEFAULT_EXCHANGE_COMMISSION: dict[str, float] = {
-    "betfair_ex_uk": 5.0,   # 活跃用户可降至 ~2%
+    "betfair_ex_uk": 5.0,   # 约 2%~5%；活跃可降至 ~2%，扣费按 5% 保守
     "betfair_ex_eu": 5.0,
     "betfair_ex_au": 5.0,
-    "smarkets": 2.0,
-    "matchbook": 1.0,       # 部分市场有封顶
-    "betdaq": 2.0,          # 促销期可能 0%，Odds API 暂不支持
+    "smarkets": 2.0,        # 固定 2%
+    "matchbook": 2.0,       # 约 1%~2%，扣费按 2% 保守
+    "betdaq": 5.0,          # 约 2%~5%；Odds API 暂无，扣费按 5% 保守
 }
 
 

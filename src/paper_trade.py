@@ -13,15 +13,22 @@ from .arbitrage import calc_arb_index, calc_profit_pct, find_best_quotes, infer_
 from .exchanges import effective_exchange_odds, get_commission
 from .models import ArbitrageLeg, ArbitrageOpportunity, MatchOdds
 
-# 各平台默认手续费（占投注额 %）
+# 各平台默认手续费（占投注额 %；交易所盈利佣金见 exchanges.py）
+# 费率依据：盈利佣金 / 充提成本（充提并入保守估算或见 config 注释）
 DEFAULT_FEE_RATES: dict[str, float] = {
-    "sportsbook": 0.0,      # 博彩公司水位已含在赔率里，额外设为 0
-    "prediction": 1.0,      # Polymarket / Kalshi 约 1%
-    "polymarket": 1.0,
-    "kalshi": 1.0,
-    "pinnacle": 0.0,
+    # 类型默认
+    "sportsbook": 0.0,      # 博彩公司盈利佣金 0%，水位已含在赔率
+    "prediction": 2.0,      # 预测市场交易费保守取上限
+    # 博彩公司
+    "pinnacle": 0.0,        # 盈利 0%；提现约 0~1%（未按笔扣，见 fx/人工）
     "bet365": 0.0,
-    "onexbet": 0.0,
+    "onexbet": 0.0,         # 1xBet
+    "unibet": 0.0,
+    "unibet_uk": 0.0,
+    "williamhill": 0.0,
+    # 预测市场（交易费约 0%~2%，保守按 2%）
+    "polymarket": 2.0,
+    "kalshi": 1.0,          # 表未列；保留既有估算
 }
 
 
@@ -104,10 +111,13 @@ def _now_iso() -> str:
 
 
 def _fee_rate(leg: ArbitrageLeg) -> float:
-    if leg.platform == "prediction":
-        return DEFAULT_FEE_RATES.get(leg.bookmaker, DEFAULT_FEE_RATES["prediction"])
+    """按平台/庄家取投注额手续费%；交易所盈利佣金已折入有效赔率。"""
     if leg.platform == "exchange":
-        return 0.0  # 交易所佣金已折算进有效赔率
+        return 0.0
+    if leg.bookmaker in DEFAULT_FEE_RATES:
+        return DEFAULT_FEE_RATES[leg.bookmaker]
+    if leg.platform == "prediction":
+        return DEFAULT_FEE_RATES["prediction"]
     return DEFAULT_FEE_RATES.get("sportsbook", 0.0)
 
 

@@ -44,27 +44,33 @@ sources:
     - wta
 
 # ========== 博彩公司 / 交易所 (The Odds API) ==========
-# bet365 / betdaq：Odds API 不支持（仅 bet365_au 付费且限澳网），需另源或人工
+# 目标组合（英/加账号可下单视角）：
+#   UK: Betfair EX / Smarkets / Matchbook / Unibet UK / (+Bet365、Betdaq 本 API 无)
+#   CA: Pinnacle / 1xBet / (+Bet365 CA 本 API 无)
+#   预测市场: Polymarket / Kalshi → 见上方 sources 直连，不走本列表
+# bet365 / betdaq：Odds API 不支持（仅 bet365_au 付费且限澳），需另源或人工
 bookmakers:
-  - pinnacle
+  - pinnacle         # CA 核心
+  - onexbet          # 1xBet
   - williamhill
-  - unibet_uk        # 英国 Unibet（不是 unibet / unibet_eu）
-  - onexbet
-  # 博彩交易所（赔率隐含概率合计≈100%，佣金按净盈利收取）
-  - betfair_ex_uk    # Betfair Exchange，佣金 ~5%（活跃可 ~2%）
+  - unibet_uk        # 英国 Unibet（勿写 unibet）
+  - betfair_ex_uk    # Betfair Exchange，盈利佣金约 2%~5%（扣费按 5%）
   - smarkets         # 固定 2%
-  - matchbook        # ~1%（部分市场封顶）
+  - matchbook        # 约 1%~2%（扣费按 2%）
 
-# ========== 交易所佣金（净盈利 %，用于模拟盘扣费） ==========
+# ========== 交易所佣金（净盈利 %，模拟盘扣费；取表内偏保守上限） ==========
+# 博彩公司盈利佣金均为 0%（Pinnacle/Bet365/Unibet/WH/1xBet）
+# Polymarket 交易费见 paper_trade.DEFAULT_FEE_RATES（保守 2%）
+# 充值约 0%；提现 Pinnacle 约 0~1%、其余多约 0%（跨平台用 fx_loss_pct 近似）
 exchanges:
   betfair_ex_uk:
-    commission_pct: 5.0
+    commission_pct: 5.0   # 约 2%~5%，保守 5%
   smarkets:
-    commission_pct: 2.0
+    commission_pct: 2.0   # 固定 2%
   matchbook:
-    commission_pct: 1.0
+    commission_pct: 2.0   # 约 1%~2%，保守 2%
   betdaq:
-    commission_pct: 2.0   # 约 2–5%，促销期可能 0%
+    commission_pct: 5.0   # 约 2%~5%；Odds API 暂无
 
 sports:
   # 足球（胜平负）

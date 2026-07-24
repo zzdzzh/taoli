@@ -6,7 +6,7 @@ import json
 import logging
 import os
 from pathlib import Path
-from typing import Iterable
+from typing import Any, Iterable
 
 import requests
 
@@ -17,6 +17,13 @@ logger = logging.getLogger(__name__)
 
 ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_STATE_PATH = ROOT / "data" / "last_notified_opps.json"
+
+_OUTCOME_CN = {"home": "主胜", "draw": "平局", "away": "客胜"}
+_PLATFORM_CN = {
+    "prediction": "预测",
+    "exchange": "交易所",
+    "sportsbook": "博彩",
+}
 
 
 def opportunity_fingerprint(opp: ArbitrageOpportunity) -> str:
@@ -51,20 +58,88 @@ def _save_last_fps(path: Path, fingerprints: Iterable[str]) -> None:
         json.dump(payload, f, ensure_ascii=False, indent=2)
 
 
-def _format_message(opps: list[ArbitrageOpportunity]) -> str:
-    header = f"【新套利机会】共 {len(opps)} 个\n"
-    bodies = [opp.summary() for opp in opps]
-    return header + "\n\n".join(bodies)
-
-
-def send_feishu_text(webhook_url: str, text: str, timeout: float = 10.0) -> bool:
-    """向飞书自定义机器人 webhook 发送文本消息。"""
-    try:
-        resp = requests.post(
-            webhook_url,
-            json={"msg_type": "text", "content": {"text": text}},
-            timeout=timeout,
+def _format_opp_md(opp: ArbitrageOpportunity) -> str:
+    """单场套利机会的飞书 Markdown 正文。"""
+    m = opp.match
+    lines = [
+        f"**{m.home_team} vs {m.away_team}**",
+        f"{m.league} · {utc_to_china_str(m.commence_time)}",
+        f"S `{opp.arb_index:.4f}` · 理论收益 **{opp.profit_pct:.2f}%**",
+        (
+            f"投入 `{opp.total_stake:.0f}` → 保底 `{opp.guaranteed_payout:.0f}`"
+            f"（利润 `{opp.profit:.0f}`）"
+        ),
+        "",
+        "**投注分配**",
+    ]
+    for leg in opp.legs:
+        oc = _OUTCOME_CN.get(leg.outcome, leg.outcome)
+        plat = _PLATFORM_CN.get(leg.platform, leg.platform)
+        name = leg.outcome_name or oc
+        lines.append(
+            f"· {name}（{oc}）@{leg.bookmaker}/{plat}"
+            f" · 赔率 `{leg.odds:.2f}` · 投 `{leg.stake:.0f}`"
         )
+    return "\n".join(lines)
+
+
+def build_feishu_card(opps: list[ArbitrageOpportunity]) -> dict[str, Any]:
+    """构建飞书交互式卡片（自定义机器人 msg_type=interactive）。"""
+    n = len(opps)
+    max_pct = max((o.profit_pct for o in opps), default=0.0)
+    # 收益越高越醒目：≥5% 红，≥2% 绿，其余橙
+    if max_pct >= 5:
+        template = "red"
+    elif max_pct >= 2:
+        template = "green"
+    else:
+        template = "orange"
+
+    elements: list[dict[str, Any]] = []
+    for i, opp in enumerate(opps):
+        if i > 0:
+            elements.append({"tag": "hr"})
+        elements.append(
+            {
+                "tag": "div",
+                "text": {"tag": "lark_md", "content": _format_opp_md(opp)},
+            }
+        )
+    elements.append(
+        {
+            "tag": "note",
+            "elements": [
+                {
+                    "tag": "plain_text",
+                    "content": "理论值，未扣手续费 / 汇率 / 限额 / 滑点",
+                }
+            ],
+        }
+    )
+
+    return {
+        "msg_type": "interactive",
+        "card": {
+            "header": {
+                "title": {
+                    "tag": "plain_text",
+                    "content": f"新套利机会 · {n} 个",
+                },
+                "template": template,
+            },
+            "elements": elements,
+        },
+    }
+
+
+def send_feishu_card(
+    webhook_url: str,
+    payload: dict[str, Any],
+    timeout: float = 10.0,
+) -> bool:
+    """向飞书自定义机器人 webhook 发送卡片消息。"""
+    try:
+        resp = requests.post(webhook_url, json=payload, timeout=timeout)
         resp.raise_for_status()
         body = resp.json()
         # 飞书成功一般为 code=0；部分旧接口无 code
@@ -99,7 +174,7 @@ def notify_new_opportunities(
     new_opps = [current_map[fp] for fp in sorted(new_fps)]
 
     if new_opps and url:
-        ok = send_feishu_text(url, _format_message(new_opps))
+        ok = send_feishu_card(url, build_feishu_card(new_opps))
         if ok:
             logger.info("已向飞书推送 %d 个新套利机会", len(new_opps))
         else:

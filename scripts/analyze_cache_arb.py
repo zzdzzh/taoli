@@ -1,9 +1,10 @@
-"""分析 sportsbooks_cache.json：含交易所佣金 / 滑点 / 汇率损耗的套利可能性。"""
+"""分析全源缓存（博彩 + Polymarket + Kalshi）：含佣金/手续费/滑点/汇率。"""
 
 from __future__ import annotations
 
 import json
 import sys
+from collections import Counter
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
@@ -17,6 +18,12 @@ sys.path.insert(0, str(ROOT))
 from src.arbitrage import calc_profit_pct, infer_outcomes  # noqa: E402
 from src.exchanges import effective_exchange_odds, get_commission, is_exchange  # noqa: E402
 from src.models import MatchOdds, OddsQuote  # noqa: E402
+from src.paper_trade import DEFAULT_FEE_RATES  # noqa: E402
+
+CACHE_CANDIDATES = (
+    ROOT / "data" / "all_sources_cache.json",
+    ROOT / "data" / "sportsbooks_cache.json",
+)
 
 
 @dataclass
@@ -40,8 +47,13 @@ def main() -> None:
     slippage = float(pt.get("slippage_pct", 0.5))
     fx_loss = float(pt.get("fx_loss_pct", 0.3))
     stake = float(pt.get("stake_per_trade", 10000.0))
+    pred_fee = float(DEFAULT_FEE_RATES.get("prediction", 1.0))
 
-    data = json.loads((ROOT / "data" / "sportsbooks_cache.json").read_text(encoding="utf-8"))
+    cache_path = next((p for p in CACHE_CANDIDATES if p.exists()), None)
+    if cache_path is None:
+        raise SystemExit("缺少缓存，请先运行 scripts/build_all_sources_cache.py")
+
+    data = json.loads(cache_path.read_text(encoding="utf-8"))
     matches: list[MatchOdds] = []
     for m in data.get("matches", []):
         matches.append(
@@ -55,11 +67,26 @@ def main() -> None:
             )
         )
 
+    bk_counts = Counter()
+    for m in matches:
+        for q in m.quotes:
+            bk_counts[q.bookmaker] += 1
+    print(f"缓存文件: {cache_path.name}")
+    print(f"比赛: {len(matches)} | 平台: {dict(bk_counts)}")
+
     def to_eff(q: OddsQuote) -> EffQuote:
-        use_comm = is_exchange(q.bookmaker) or q.platform == "exchange"
+        is_pred = q.platform == "prediction" or q.bookmaker in ("polymarket", "kalshi")
+        use_comm = (is_exchange(q.bookmaker) or q.platform == "exchange") and not is_pred
         comm = get_commission(q.bookmaker, cfg) if use_comm else 0.0
         after_comm = effective_exchange_odds(q.odds, comm) if comm else q.odds
         after_all = after_comm * (1.0 - slippage / 100.0)
+        fee_pct = 0.0
+        if is_pred:
+            fee_pct = float(
+                DEFAULT_FEE_RATES.get(q.bookmaker, DEFAULT_FEE_RATES.get("prediction", 2.0))
+            )
+            if fee_pct > 0:
+                after_all = after_all / (1.0 + fee_pct / 100.0)
         return EffQuote(
             q.bookmaker,
             q.outcome,
@@ -68,7 +95,7 @@ def main() -> None:
             q.odds,
             after_comm,
             after_all,
-            comm,
+            fee_pct if is_pred else comm,
         )
 
     def best_by(quotes: list[EffQuote], attr: str) -> dict[str, EffQuote]:
@@ -147,53 +174,39 @@ def main() -> None:
                 "comm_arb": s_comm is not None and s_comm < 1.0,
                 "net_arb": p_net is not None and p_net > 0,
                 "legs": legs_net,
-                "platforms_raw": sorted({b_raw[o].bookmaker for o in outcomes if o in b_raw}),
-                "platforms_net": sorted({b_net[o].bookmaker for o in outcomes if o in b_net}),
+                "platforms_raw": sorted(
+                    {b_raw[o].bookmaker for o in outcomes if o in b_raw}
+                ),
+                "platforms_net": sorted(
+                    {b_net[o].bookmaker for o in outcomes if o in b_net}
+                ),
             }
         )
 
     rows.sort(key=lambda r: r["p_net"] if r["p_net"] is not None else -999, reverse=True)
+    if not rows:
+        print("无可计算比赛")
+        return
 
     s_raws = [r["s_raw"] for r in rows]
     s_nets = [r["s_slip"] for r in rows if r["s_slip"]]
 
     print("=== 成本假设 ===")
-    print("交易所佣金: betfair_ex_uk 5%, smarkets 2%, matchbook 1%")
-    print(f"滑点: {slippage}% | 汇率损耗: {fx_loss}% | 总投入/场: {stake}")
-    print(f"可计算比赛: {len(rows)}")
-    print()
-    print("=== 汇总 ===")
-    print(f"理论套利(S_raw<1): {sum(1 for r in rows if r['raw_arb'])}")
-    print(f"扣佣后套利(S_comm<1): {sum(1 for r in rows if r['comm_arb'])}")
-    print(f"扣佣+滑点+汇率后净利>0: {sum(1 for r in rows if r['net_arb'])}")
-    print(f"S_raw: min={min(s_raws):.4f} median={median(s_raws):.4f} max={max(s_raws):.4f}")
+    print("交易所佣金: betfair 5% / smarkets 2% / matchbook 1%")
+    print(f"预测市场手续费: {pred_fee}%")
+    print(f"滑点 {slippage}% | 汇率 {fx_loss}% | 可计算 {len(rows)} 场")
     print(
-        f"S_after_slip: min={min(s_nets):.4f} median={median(s_nets):.4f} max={max(s_nets):.4f}"
+        f"理论套利 {sum(1 for r in rows if r['raw_arb'])} | "
+        f"扣费后 {sum(1 for r in rows if r['comm_arb'])} | "
+        f"净利>0 {sum(1 for r in rows if r['net_arb'])}"
     )
-    print()
-    print("=== 最接近套利 TOP15（按净收益排序）===")
-    for i, r in enumerate(rows[:15], 1):
-        if r["net_arb"]:
-            flag = "NET+"
-        elif r["comm_arb"]:
-            flag = "COMM+"
-        elif r["raw_arb"]:
-            flag = "RAW+"
-        else:
-            flag = "near"
-        print(f"{i:2d}. [{flag}] {r['home']} vs {r['away']} | {r['league']}")
+    print("=== TOP10 ===")
+    for i, r in enumerate(rows[:10], 1):
+        flag = "NET+" if r["net_arb"] else ("RAW+" if r["raw_arb"] else "near")
         print(
-            f"    S_raw={r['s_raw']:.4f}({r['p_raw']:+.2f}%) | "
-            f"S_comm={r['s_comm']:.4f}({r['p_comm']:+.2f}%) | "
-            f"net={r['p_net']:+.2f}%"
+            f"{i:2d}. [{flag}] {r['home']} vs {r['away']} | "
+            f"net={r['p_net']:+.2f}% | {r['platforms_net']}"
         )
-        print(f"    raw平台={r['platforms_raw']} | net平台={r['platforms_net']}")
-        for lg in r["legs"]:
-            c = f" 佣{lg['comm_pct']}%" if lg["comm_pct"] else ""
-            print(
-                f"      {lg['outcome']:5s} {lg['bookmaker']:14s} "
-                f"raw={lg['raw']:.3f} eff={lg['eff']:.3f}{c} stake={lg['stake']:.0f}"
-            )
 
     bins = [
         (0, 0.98),
@@ -225,25 +238,32 @@ def main() -> None:
         ]
 
     exchange_keys = {"betfair_ex_uk", "smarkets", "matchbook"}
-    ex_inflated = 0
-    for r in rows:
-        if exchange_keys & set(r["platforms_raw"]):
-            if r["p_raw"] > 0 and not r["net_arb"]:
-                ex_inflated += 1
+    ex_inflated = sum(
+        1
+        for r in rows
+        if (exchange_keys & set(r["platforms_raw"])) and r["p_raw"] > 0 and not r["net_arb"]
+    )
 
     out = {
         "assumptions": {
             "stake": stake,
             "slippage_pct": slippage,
             "fx_loss_pct": fx_loss,
+            "prediction_fee_pct": pred_fee,
             "commissions": {
                 "betfair_ex_uk": 5.0,
                 "smarkets": 2.0,
-                "matchbook": 1.0,
+                "matchbook": 2.0,
+                "betdaq": 5.0,
+                "polymarket": pred_fee,
+                "kalshi": float(DEFAULT_FEE_RATES.get("kalshi", 1.0)),
             },
+            "cache_file": cache_path.name,
             "cache_matches": len(matches),
             "scored": len(rows),
-            "fetched_at": data.get("last_fetch"),
+            "fetched_at": data.get("built_at") or data.get("last_fetch"),
+            "source_counts": data.get("sources", {}),
+            "bookmakers": dict(bk_counts),
         },
         "summary": {
             "raw_arb": sum(1 for r in rows if r["raw_arb"]),
@@ -253,18 +273,16 @@ def main() -> None:
             "s_raw_median": round(median(s_raws), 6),
             "s_slip_min": round(min(s_nets), 6),
             "s_slip_median": round(median(s_nets), 6),
-            "best_net_pct": rows[0]["p_net"] if rows else None,
-            "best_raw_pct": max(r["p_raw"] for r in rows) if rows else None,
+            "best_net_pct": rows[0]["p_net"],
+            "best_raw_pct": max(r["p_raw"] for r in rows),
             "exchange_looks_arb_but_net_fail": ex_inflated,
         },
         "top": rows[:20],
         "hist_raw": hist(s_raws),
         "hist_slip": hist(s_nets),
     }
-
     out_path = ROOT / "data" / "arb_cost_analysis.json"
     out_path.write_text(json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8")
-    print()
     print(f"已写入 {out_path}")
 
 
