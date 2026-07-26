@@ -127,4 +127,4 @@ paper_trade:
 # ========== 博彩公司缓存 ==========
 # 博彩公司 API 额度有限（500次/月），数据缓存周期（秒）
 # 默认 432000 = 5 天，6次/月 ≈ 360点
-sportsbooks_cache_sec: 432000
+sportsbooks_cache_sec: 86400
