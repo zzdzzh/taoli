@@ -55,6 +55,7 @@ def main() -> int:
     parser.add_argument("--no-sportsbooks", action="store_true", help="跳过博彩公司")
     parser.add_argument("--no-polymarket", action="store_true", help="跳过 Polymarket")
     parser.add_argument("--no-kalshi", action="store_true", help="跳过 Kalshi")
+    parser.add_argument("--dump-matches", type=str, help="保存所有合并后的比赛数据到 JSON 文件")
     parser.add_argument("-v", "--verbose", action="store_true")
     args = parser.parse_args()
 
@@ -100,9 +101,26 @@ def main() -> int:
     )
 
     def scan_and_save():
-        opps = scanner.run_once()
+        opps, matches = scanner.run_once()
         if args.output and opps:
             scanner.save_report(opps, args.output)
+        if args.dump_matches:
+            from dataclasses import asdict
+            import json as _json
+            data = [
+                {
+                    "sport": m.sport,
+                    "league": m.league,
+                    "home_team": m.home_team,
+                    "away_team": m.away_team,
+                    "commence_time": m.commence_time.isoformat(),
+                    "quotes": [asdict(q) for q in m.quotes],
+                }
+                for m in matches
+            ]
+            path = Path(args.dump_matches)
+            path.write_text(_json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
+            print(f"比赛数据已保存: {path}")
         return opps
 
     if args.loop:

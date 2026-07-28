@@ -54,8 +54,8 @@ class ArbitrageScanner:
         self._cache_file = Path("data") / "sportsbooks_cache.json"
         self._load_cache_from_disk()
 
-    def run_once(self) -> list[ArbitrageOpportunity]:
-        """执行一次完整扫描"""
+    def run_once(self) -> tuple[list[ArbitrageOpportunity], list[MatchOdds]]:
+        """执行一次完整扫描，返回 (套利机会, 合并后的所有比赛)"""
         sources = self.config.get("sources", {})
         all_match_groups: list[list[MatchOdds]] = []
 
@@ -103,7 +103,7 @@ class ArbitrageScanner:
 
         if not all_match_groups:
             logger.warning("未启用任何数据源")
-            return []
+            return [], []
 
         # 4. 跨平台合并
         merged = merge_matches(all_match_groups)
@@ -132,7 +132,7 @@ class ArbitrageScanner:
         # 与上次扫描对比，仅对新机会推送飞书（未配置 webhook 时仅更新去重基线）
         notify_new_opportunities(opportunities)
 
-        return opportunities
+        return opportunities, merged
 
     @staticmethod
     def _default_alert(opp: ArbitrageOpportunity) -> None:

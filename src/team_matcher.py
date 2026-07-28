@@ -42,6 +42,23 @@ TEAM_ALIASES: dict[str, str] = {
     "novak djokovic": "djokovic",
     "carlos alcaraz": "alcaraz",
     "jannik sinner": "sinner",
+    # WNBA 城市名 → 完整队名（Kalshi 只返回城市名，Polymarket 返回完整队名）
+    "atlanta": "atlanta dream",
+    "chicago": "chicago sky",
+    "connecticut": "connecticut sun",
+    "dallas": "dallas wings",
+    "golden state": "golden state valkyries",
+    "indiana": "indiana fever",
+    "las vegas": "las vegas aces",
+    "los angeles": "los angeles sparks",
+    "minnesota": "minnesota lynx",
+    "new york": "new york liberty",
+    "phoenix": "phoenix mercury",
+    "portland": "portland fire",
+    "portlandfire": "portland fire",
+    "seattle": "seattle storm",
+    "toronto": "toronto tempo",
+    "washington": "washington mystics",
 }
 
 
@@ -89,14 +106,12 @@ class MatchKey:
 
     home: str
     away: str
-    date: str  # YYYY-MM-DD
 
     @classmethod
     def from_match(cls, match: MatchOdds) -> MatchKey:
         return cls(
             home=normalize_team(match.home_team),
             away=normalize_team(match.away_team),
-            date=match.commence_time.strftime("%Y-%m-%d"),
         )
 
     @classmethod
@@ -104,12 +119,11 @@ class MatchKey:
         cls,
         home: str,
         away: str,
-        commence_time: datetime,
+        commence_time: datetime = None,
     ) -> MatchKey:
         return cls(
             home=normalize_team(home),
             away=normalize_team(away),
-            date=commence_time.strftime("%Y-%m-%d"),
         )
 
 
@@ -117,15 +131,18 @@ def merge_matches(matches_list: list[list[MatchOdds]]) -> list[MatchOdds]:
     """
     将来自不同平台的比赛赔率合并到同一 MatchOdds。
 
-    按 (归一化主队, 归一化客队, 日期) 匹配。
+    按 (归一化主队, 归一化客队, 开赛小时) 匹配，跨来源同时间同队名的比赛合并。
     """
-    merged: dict[MatchKey, MatchOdds] = {}
+    merged: dict[tuple, MatchOdds] = {}
 
     for matches in matches_list:
         for match in matches:
-            key = MatchKey.from_match(match)
-            existing = merged.get(key)
+            home = normalize_team(match.home_team)
+            away = normalize_team(match.away_team)
+            hour = match.commence_time.strftime("%Y-%m-%dT%H")
+            key = (home, away, hour)
 
+            existing = merged.get(key)
             if existing is None:
                 merged[key] = MatchOdds(
                     sport=match.sport,
@@ -137,7 +154,6 @@ def merge_matches(matches_list: list[list[MatchOdds]]) -> list[MatchOdds]:
                 )
             else:
                 existing.quotes.extend(match.quotes)
-                # 保留更早的开赛时间（更精确）
                 if match.commence_time < existing.commence_time:
                     existing.commence_time = match.commence_time
 

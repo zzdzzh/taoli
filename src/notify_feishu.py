@@ -85,7 +85,7 @@ def build_template_card(opp: ArbitrageOpportunity) -> dict[str, Any]:
             "type": "template",
             "data": {
                 "template_id": template_id,
-                "template_version_name": "1.0.0",
+                "template_version_name": "1.0.1",
                 "template_variable": {
                     "team1": m.home_team,
                     "team2": m.away_team,

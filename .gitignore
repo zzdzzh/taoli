@@ -4,3 +4,7 @@ __pycache__/
 *.pyc
 .venv/
 venv/
+matches.json
+test.json
+web_stderr.log
+web_stdout.log
