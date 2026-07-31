@@ -24,6 +24,11 @@ MYRIAD_API = "https://api-v2.myriadprotocol.com"
 
 DRAW_NAMES = {"draw", "tie", "x", "平", "平局"}
 
+# 与 Polymarket/Kalshi 一致：过滤空盘极端价
+MIN_EXECUTABLE_ASK = 0.05
+MAX_EXECUTABLE_ASK = 0.95
+MIN_ASK_SUM = 0.90
+
 
 class MyriadClient:
     """Myriad Protocol REST API 客户端（公开可读，可选 API Key 提高限额）"""
@@ -137,13 +142,15 @@ class MyriadClient:
             if outcome_key is None:
                 continue
 
-            # 优先可执行买入价 bestAsk；AMM 常为空则用 mid price
+            # 优先可执行买入价 bestAsk；AMM 常为空则用 mid price（仍受合理区间约束）
             raw = oc.get("bestAsk")
             if raw is None:
                 raw = oc.get("price")
             try:
                 price = float(raw)
             except (TypeError, ValueError):
+                continue
+            if not (MIN_EXECUTABLE_ASK <= price <= MAX_EXECUTABLE_ASK):
                 continue
             odds = polymarket_price_to_odds(price)
             if odds <= 1.0:
@@ -159,6 +166,11 @@ class MyriadClient:
                     raw_price=price,
                 )
             )
+
+        # 多腿价之和过低 → 假盘
+        priced = [q.raw_price for q in quotes if q.raw_price > 0]
+        if len(priced) >= 2 and sum(priced) < (MIN_ASK_SUM if len(priced) == 2 else 0.92):
+            return []
         return quotes
 
     @staticmethod

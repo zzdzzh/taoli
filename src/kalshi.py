@@ -17,6 +17,10 @@ logger = logging.getLogger(__name__)
 
 KALSHI_URL = "https://external-api.kalshi.com/trade-api/v2"
 
+# 与 Polymarket 一致：过滤空盘口极端 ask
+MIN_EXECUTABLE_ASK = 0.05
+MAX_EXECUTABLE_ASK = 0.95
+
 # Kalshi 体育 series ticker
 KALSHI_SOCCER_SERIES: dict[str, str] = {
     # 足球
@@ -183,6 +187,13 @@ class KalshiClient:
         if len(quotes) < min_quotes:
             return None
 
+        # 同事件多腿 ask 之和过低 → 空盘假价
+        priced = [q.raw_price for q in quotes if q.raw_price > 0]
+        if len(priced) >= 2:
+            min_sum = 0.90 if len(priced) == 2 else 0.92
+            if sum(priced) < min_sum:
+                return None
+
         # 优先用 occurrence_datetime（实际比赛结束时间），估算开始时间，其次 close_time
         game_time = markets[0].get("occurrence_datetime") or close_time
         commence = self._parse_close_time(game_time)
@@ -218,7 +229,7 @@ class KalshiClient:
             # dollars 字段已是 0~1；美分字段常为 1~99
             if price > 1:
                 price = price / 100.0
-            if 0 < price < 1:
+            if MIN_EXECUTABLE_ASK <= price <= MAX_EXECUTABLE_ASK:
                 return price
 
         ticker = market.get("ticker", "")
@@ -240,7 +251,7 @@ class KalshiClient:
                 if best_no_bid > 1:
                     best_no_bid = best_no_bid / 100.0
                 yes_ask = 1.0 - best_no_bid
-                if 0 < yes_ask < 1:
+                if MIN_EXECUTABLE_ASK <= yes_ask <= MAX_EXECUTABLE_ASK:
                     return yes_ask
         except (requests.RequestException, TypeError, ValueError, IndexError):
             pass

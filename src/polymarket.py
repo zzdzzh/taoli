@@ -19,6 +19,13 @@ logger = logging.getLogger(__name__)
 GAMMA_URL = "https://gamma-api.polymarket.com"
 CLOB_URL = "https://clob.polymarket.com"
 
+# 可成交价合理性：过低/过高的 ask 多为空盘口挂单，会产生假套利（如赔率 50）
+MIN_EXECUTABLE_ASK = 0.05   # 对应赔率上限约 20
+MAX_EXECUTABLE_ASK = 0.95   # 对应赔率下限约 1.05
+# 二元 moneyline 两边 ask 之和过低 = 无真实深度
+MIN_MONEYLINE_ASK_SUM = 0.90
+
+
 # Polymarket sport code → series_id（来自 /sports 接口）
 POLYMARKET_SERIES: dict[str, str] = {
     # 足球
@@ -250,7 +257,7 @@ class PolymarketClient:
                     price = float(raw)
                 except (TypeError, ValueError):
                     continue
-                if 0 < price < 1:
+                if 0 < price < 1 and MIN_EXECUTABLE_ASK <= price <= MAX_EXECUTABLE_ASK:
                     result[str(tid)] = price
 
         logger.info("Polymarket CLOB 买价: %d/%d", len(result), len(token_ids))
@@ -297,40 +304,14 @@ class PolymarketClient:
 
             group_title = (market.get("groupItemTitle") or "").strip()
 
-            # 处理 groupItemTitle 为空的情况（MLB 等联赛的 moneyline 市场）
+            # groupItemTitle 为空：若有 outcomes+token，按 moneyline 用 CLOB 询价（禁用 outcomePrices）
             if not group_title:
-                outcomes = market.get("outcomes")
-                outcome_prices = market.get("outcomePrices")
-                if outcomes and outcome_prices:
-                    if isinstance(outcomes, str):
-                        outcomes = json.loads(outcomes)
-                    if isinstance(outcome_prices, str):
-                        outcome_prices = json.loads(outcome_prices)
-                    if len(outcomes) == 2 and len(outcome_prices) == 2:
-                        for team_name, price_str in zip(outcomes, outcome_prices):
-                            price = float(price_str)
-                            if price <= 0:
-                                continue
-                            odds = polymarket_price_to_odds(price)
-                            if odds <= 1.0:
-                                continue
-                            team_lower = team_name.lower().strip()
-                            if team_lower == home_norm:
-                                outcome = "home"
-                            elif team_lower == away_norm:
-                                outcome = "away"
-                            else:
-                                continue
-                            quotes.append(
-                                OddsQuote(
-                                    bookmaker="polymarket",
-                                    outcome=outcome,
-                                    odds=odds,
-                                    outcome_name=team_name,
-                                    platform="prediction",
-                                    raw_price=price,
-                                )
-                            )
+                if len(self._parse_outcomes(market)) >= 2 and self._parse_token_ids(market):
+                    moneyline_quotes.extend(
+                        self._parse_moneyline_market(
+                            market, home_norm, away_norm, clob_asks,
+                        )
+                    )
                 continue
             if self._is_non_h2h_market(group_title):
                 continue
@@ -364,7 +345,19 @@ class PolymarketClient:
             )
 
         # 新版体育盘优先用 moneyline；旧版 Home/Draw/Away 独立市场作回退
-        return moneyline_quotes or group_quotes
+        chosen = moneyline_quotes or group_quotes
+        return chosen if self._quotes_look_liquid(chosen) else []
+
+    @staticmethod
+    def _quotes_look_liquid(quotes: list[OddsQuote]) -> bool:
+        """同一市场多腿 ask 之和过低 → 空盘假价，丢弃"""
+        if len(quotes) < 2:
+            return False
+        prices = [q.raw_price for q in quotes if q.raw_price > 0]
+        if len(prices) < 2:
+            return True
+        minimum = MIN_MONEYLINE_ASK_SUM if len(prices) == 2 else 0.92
+        return sum(prices) >= minimum
 
     def _parse_moneyline_market(
         self,
@@ -402,6 +395,12 @@ class PolymarketClient:
                     raw_price=ask,
                 )
             )
+
+        # 两边都有价时，ask 之和过低说明盘口无深度（假套利）
+        if len(quotes) >= 2:
+            ask_sum = sum(q.raw_price for q in quotes)
+            if ask_sum < MIN_MONEYLINE_ASK_SUM:
+                return []
         return quotes
 
     @staticmethod
@@ -411,18 +410,19 @@ class PolymarketClient:
         fallback_ask: Any = None,
     ) -> float | None:
         """优先 CLOB best ask；否则 Gamma bestAsk。不用 outcomePrices。"""
+        price: float | None = None
         if token_id and token_id in clob_asks:
             price = clob_asks[token_id]
-            if 0 < price < 1:
-                return price
-        if fallback_ask is not None:
+        elif fallback_ask is not None:
             try:
                 price = float(fallback_ask)
             except (TypeError, ValueError):
                 return None
-            if 0 < price < 1:
-                return price
-        return None
+        if price is None:
+            return None
+        if not (MIN_EXECUTABLE_ASK <= price <= MAX_EXECUTABLE_ASK):
+            return None
+        return price
 
     @staticmethod
     def _is_non_h2h_market(title: str) -> bool:
