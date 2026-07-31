@@ -191,32 +191,40 @@ def build_template_card(
         else:
             beizhu = cost_note
 
-    # 模板文案是「理论收益」→ 与控制台一致，用毛理论 profit_pct
-    shouru = f"{opp.profit_pct:.2f}%"
+    # 模板文案是「理论收益」→ 与控制台一致
+    profit = round(float(opp.profit_pct), 2)
+    shouru = f"{profit:.2f}%"
 
-    # 联赛旁带平台数，一眼可知覆盖广度
+    # 联赛旁带平台数 + 理论收益（大号「理论收益」若未绑变量/类型不对，这里仍能看见）
     n_books = len({q.bookmaker for q in m.quotes})
-    liansai = f"{m.league} · {n_books}平台"
+    liansai = f"{m.league} · {n_books}平台 · 理论{profit:.2f}%"
+
+    # 版本：FEISHU_TEMPLATE_VERSION 可固定；不设则用飞书最新发布版（勿锁死旧版模拟数据）
+    version = (os.getenv("FEISHU_TEMPLATE_VERSION") or "").strip()
+
+    data: dict[str, Any] = {
+        "template_id": template_id,
+        "template_variable": {
+            "team1": m.home_team,
+            "team2": m.away_team,
+            "liansai": liansai,
+            "shijian": utc_to_china_str(m.commence_time),
+            # 文本型变量用带 %；若模板是数字型请在飞书改成文本，或设 FEISHU_SHOURU_AS_NUMBER=1
+            "shouru": profit if os.getenv("FEISHU_SHOURU_AS_NUMBER", "").strip() in ("1", "true", "yes") else shouru,
+            "odds1": odds_parts[0],
+            "odds2": odds_parts[1],
+            "odds3": odds_parts[2],
+            "beizhu": beizhu,
+        },
+    }
+    if version:
+        data["template_version_name"] = version
 
     return {
         "msg_type": "interactive",
         "card": {
             "type": "template",
-            "data": {
-                "template_id": template_id,
-                "template_version_name": "1.0.1",
-                "template_variable": {
-                    "team1": m.home_team,
-                    "team2": m.away_team,
-                    "liansai": liansai,
-                    "shijian": utc_to_china_str(m.commence_time),
-                    "shouru": shouru,
-                    "odds1": odds_parts[0],
-                    "odds2": odds_parts[1],
-                    "odds3": odds_parts[2],
-                    "beizhu": beizhu,
-                },
-            },
+            "data": data,
         },
     }
 
