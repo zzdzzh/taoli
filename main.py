@@ -52,6 +52,11 @@ def main() -> int:
     parser.add_argument("--loop", action="store_true", help="循环扫描")
     parser.add_argument("--interval", type=int, default=int(os.getenv("SCAN_INTERVAL", "60")))
     parser.add_argument("-o", "--output", help="保存 JSON 报告")
+    parser.add_argument(
+        "--dump-matches",
+        metavar="FILE",
+        help="将合并后的比赛赔率另存为 JSON",
+    )
     parser.add_argument("--no-sportsbooks", action="store_true", help="跳过博彩公司")
     parser.add_argument("--no-polymarket", action="store_true", help="跳过 Polymarket")
     parser.add_argument("--no-kalshi", action="store_true", help="跳过 Kalshi")

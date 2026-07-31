@@ -184,6 +184,10 @@ def detect_arbitrage(
             )
         )
 
+    # 套利必须跨平台：全部腿在同一庄家（如双边都 Polymarket）视为无效
+    if len({leg.bookmaker for leg in legs}) < 2:
+        return None
+
     return ArbitrageOpportunity(
         match=match,
         legs=legs,
