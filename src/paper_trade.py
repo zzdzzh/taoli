@@ -29,6 +29,7 @@ DEFAULT_FEE_RATES: dict[str, float] = {
     # 预测市场（交易费约 0%~2%，保守按 2%）
     "polymarket": 2.0,
     "kalshi": 1.0,          # 表未列；保留既有估算
+    "myriad": 2.0,          # Myriad 交易费保守按 2%
 }
 
 

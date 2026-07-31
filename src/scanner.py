@@ -12,8 +12,10 @@ from typing import Any, Callable
 import yaml
 
 from .arbitrage import scan_matches
+from .betfair import BetfairClient
 from .kalshi import KalshiClient
 from .models import ArbitrageOpportunity, MatchOdds, OddsQuote
+from .myriad import MyriadClient
 from .notify_feishu import notify_new_opportunities
 from .odds_api import fetch_all_odds, parse_api_keys
 from .polymarket import PolymarketClient
@@ -101,20 +103,38 @@ class ArbitrageScanner:
             logger.info("Kalshi: %d 场比赛", len(kalshi_matches))
             all_match_groups.append(kalshi_matches)
 
+        # 4. Myriad Markets
+        if sources.get("myriad", True):
+            myriad_topics = sources.get("myriad_topics", ["Sports"])
+            logger.info("拉取 Myriad (%s)...", myriad_topics)
+            myriad_client = MyriadClient()
+            myriad_matches = myriad_client.fetch_soccer_matches(myriad_topics)
+            logger.info("Myriad: %d 场比赛", len(myriad_matches))
+            all_match_groups.append(myriad_matches)
+
+        # 5. Betfair Exchange 直连
+        if sources.get("betfair", True):
+            bf_types = sources.get("betfair_event_types", ["soccer", "tennis", "basketball"])
+            bf_days = int(sources.get("betfair_days_ahead", 7))
+            logger.info("拉取 Betfair Exchange (%s, %d 天)...", bf_types, bf_days)
+            bf_matches = BetfairClient().fetch_soccer_matches(bf_types, days_ahead=bf_days)
+            logger.info("Betfair: %d 场比赛", len(bf_matches))
+            all_match_groups.append(bf_matches)
+
         if not all_match_groups:
             logger.warning("未启用任何数据源")
             return []
 
-        # 4. 跨平台合并
+        # 6. 跨平台合并
         merged = merge_matches(all_match_groups)
         logger.info("合并后共 %d 场独立比赛", len(merged))
 
-        # 5. 过滤已开赛
+        # 7. 过滤已开赛
         now = datetime.now(timezone.utc)
         upcoming = [m for m in merged if m.commence_time > now]
         logger.info("未开赛: %d 场", len(upcoming))
 
-        # 6. 套利检测
+        # 8. 套利检测
         opportunities = scan_matches(
             upcoming,
             total_stake=self.total_stake,
@@ -130,7 +150,12 @@ class ArbitrageScanner:
             logger.info("未发现符合条件的套利机会")
 
         # 与上次扫描对比，仅对新机会推送飞书（未配置 webhook 时仅更新去重基线）
-        notify_new_opportunities(opportunities)
+        pt = self.config.get("paper_trade") or {}
+        notify_new_opportunities(
+            opportunities,
+            slippage_pct=float(pt.get("slippage_pct", 0.5)),
+            fx_loss_pct=float(pt.get("fx_loss_pct", 0.3)),
+        )
 
         return opportunities
 

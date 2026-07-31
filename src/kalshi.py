@@ -196,18 +196,26 @@ class KalshiClient:
 
     def _get_yes_ask(self, market: dict[str, Any]) -> float | None:
         """
-        获取 YES 买入价（美元 0~1）。
+        获取 YES 可成交买入价（美元 0~1）。
 
-        优先用 API 返回的 yes_ask；若无则从 orderbook 推算:
-        yes_ask ≈ 1 - best_no_bid
+        优先级：
+        1) 市场字段 yes_ask / yes_ask_dollars（实时最优卖单）
+        2) orderbook：yes_ask ≈ 1 - best_no_bid
+        不用 last_price（成交价，非可成交盘口，会虚高理论收益）
         """
-        yes_ask = market.get("yes_ask")
-        if yes_ask and yes_ask > 0:
-            return float(yes_ask) / 100.0 if yes_ask > 1 else float(yes_ask)
-
-        last = market.get("last_price")
-        if last and last > 0:
-            return float(last) / 100.0 if last > 1 else float(last)
+        for key in ("yes_ask_dollars", "yes_ask"):
+            raw = market.get(key)
+            if raw is None or raw == "" or raw == 0:
+                continue
+            try:
+                price = float(raw)
+            except (TypeError, ValueError):
+                continue
+            # dollars 字段已是 0~1；美分字段常为 1~99
+            if price > 1:
+                price = price / 100.0
+            if 0 < price < 1:
+                return price
 
         ticker = market.get("ticker", "")
         if not ticker:
@@ -219,14 +227,18 @@ class KalshiClient:
                 timeout=self.timeout,
             )
             resp.raise_for_status()
-            ob = resp.json().get("orderbook_fp", {})
-            no_bids = ob.get("no_dollars", [])
+            data = resp.json()
+            ofp = data.get("orderbook_fp") or data.get("orderbook") or {}
+            no_bids = ofp.get("no_dollars") or ofp.get("no") or []
             if no_bids:
+                # Kalshi 盘口各边一般为升序 bids；最优在末尾
                 best_no_bid = float(no_bids[-1][0])
+                if best_no_bid > 1:
+                    best_no_bid = best_no_bid / 100.0
                 yes_ask = 1.0 - best_no_bid
                 if 0 < yes_ask < 1:
                     return yes_ask
-        except requests.RequestException:
+        except (requests.RequestException, TypeError, ValueError, IndexError):
             pass
 
         return None

@@ -182,11 +182,12 @@ class LivePaperReport:
             "| Matchbook | 交易所 | 净盈利佣金 2%（表内 1%~2% 取保守） |",
             "| Polymarket | 预测 | 交易费 2%（表内 0%~2% 取保守） |",
             "| Kalshi | 预测 | 交易费约 1% |",
+            "| Myriad | 预测 | 交易费约 2%（保守） |",
             "",
             "## 说明",
             "",
             "- 赔率为扫描时刻各平台 API 快照，非逐笔推送",
-            "- 已扣：滑点 0.5%、预测市场手续费（Polymarket 2% / Kalshi 1%）、"
+            "- 已扣：滑点 0.5%、预测市场手续费（Polymarket/Myriad 2% / Kalshi 1%）、"
             "交易所净盈利佣金、跨平台汇率损耗 0.3%",
             "- 博彩公司盈利佣金按 0%；充提成本未按笔建模",
             "- 仅 S < 0.98 时模拟开仓",
@@ -279,7 +280,9 @@ class LivePaperRunner:
         """拉取并合并所有平台实时数据，返回 (比赛列表, 数据源名称, 博彩是否新鲜)"""
         from datetime import datetime, timezone
 
+        from .betfair import BetfairClient
         from .kalshi import KalshiClient
+        from .myriad import MyriadClient
         from .polymarket import PolymarketClient
         from .team_matcher import merge_matches
 
@@ -319,6 +322,17 @@ class LivePaperRunner:
             kalshi_leagues = sources.get("kalshi_leagues", ["worldcup", "epl"])
             groups.append(KalshiClient().fetch_soccer_matches(kalshi_leagues))
             source_names.append("Kalshi")
+
+        if sources.get("myriad", True):
+            myriad_topics = sources.get("myriad_topics", ["Sports"])
+            groups.append(MyriadClient().fetch_soccer_matches(myriad_topics))
+            source_names.append("Myriad")
+
+        if sources.get("betfair", True):
+            bf_types = sources.get("betfair_event_types", ["soccer", "tennis", "basketball"])
+            bf_days = int(sources.get("betfair_days_ahead", 7))
+            groups.append(BetfairClient().fetch_soccer_matches(bf_types, days_ahead=bf_days))
+            source_names.append("Betfair")
 
         merged = merge_matches(groups)
         now = datetime.now(timezone.utc)
@@ -377,7 +391,12 @@ class LivePaperRunner:
 
         from .notify_feishu import notify_new_opportunities
 
-        notify_new_opportunities(opportunities)
+        pt = self.config.get("paper_trade") or {}
+        notify_new_opportunities(
+            opportunities,
+            slippage_pct=float(pt.get("slippage_pct", self.engine.slippage_pct)),
+            fx_loss_pct=float(pt.get("fx_loss_pct", self.engine.fx_loss_pct)),
+        )
 
         settled_count = auto_settle_open_positions(self.engine)
         p = self.engine.portfolio
@@ -467,6 +486,8 @@ class LivePaperRunner:
         freshness = {}
         freshness["Polymarket"] = "实时"
         freshness["Kalshi"] = "实时"
+        freshness["Myriad"] = "实时"
+        freshness["Betfair"] = "实时"
         if self._last_sportsbooks_fetch > 0:
             ago = int(now - self._last_sportsbooks_fetch)
             if ago < 60:

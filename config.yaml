@@ -5,6 +5,8 @@ sources:
   sportsbooks: true       # 博彩公司 (The Odds API)
   polymarket: true        # Polymarket 预测市场
   kalshi: true            # Kalshi 预测市场
+  myriad: true            # Myriad Markets（https://myriad.markets）
+  betfair: true           # Betfair Exchange 直连（需 BETFAIR_* 凭证）
 
   # Polymarket 联赛代码 → series_id 映射见 src/polymarket.py
   polymarket_leagues:
@@ -43,18 +45,32 @@ sources:
     - atp
     - wta
 
+  # Myriad Markets topics（API: topics=Sports&moneyline=true）
+  # 文档: https://docs.myriad.markets/builders/myriad-api-reference
+  myriad_topics:
+    - Sports
+
+  # Betfair Exchange 直连（文档: https://developer.betfair.com/exchange-api/）
+  # event type: soccer=1 / tennis=2 / basketball=7522
+  betfair_event_types:
+    - soccer
+    - tennis
+    - basketball
+  betfair_days_ahead: 7
+
 # ========== 博彩公司 / 交易所 (The Odds API) ==========
 # 目标组合（英/加账号可下单视角）：
 #   UK: Betfair EX / Smarkets / Matchbook / Unibet UK / (+Bet365、Betdaq 本 API 无)
 #   CA: Pinnacle / 1xBet / (+Bet365 CA 本 API 无)
-#   预测市场: Polymarket / Kalshi → 见上方 sources 直连，不走本列表
+#   预测市场: Polymarket / Kalshi / Myriad → 见上方 sources 直连，不走本列表
+#   Betfair: sources.betfair 直连 Exchange API；下方 betfair_ex_uk 仍可走 Odds API（可二选一省配额）
 # bet365 / betdaq：Odds API 不支持（仅 bet365_au 付费且限澳），需另源或人工
 bookmakers:
   - pinnacle         # CA 核心
   - onexbet          # 1xBet
   - williamhill
   - unibet_uk        # 英国 Unibet（勿写 unibet）
-  - betfair_ex_uk    # Betfair Exchange，盈利佣金约 2%~5%（扣费按 5%）
+  - betfair_ex_uk    # 也可由 sources.betfair 直连；保留则 Odds API 仍拉一份
   - smarkets         # 固定 2%
   - matchbook        # 约 1%~2%（扣费按 2%）
 

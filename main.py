@@ -55,6 +55,8 @@ def main() -> int:
     parser.add_argument("--no-sportsbooks", action="store_true", help="跳过博彩公司")
     parser.add_argument("--no-polymarket", action="store_true", help="跳过 Polymarket")
     parser.add_argument("--no-kalshi", action="store_true", help="跳过 Kalshi")
+    parser.add_argument("--no-myriad", action="store_true", help="跳过 Myriad")
+    parser.add_argument("--no-betfair", action="store_true", help="跳过 Betfair Exchange 直连")
     parser.add_argument("-v", "--verbose", action="store_true")
     args = parser.parse_args()
 
@@ -71,15 +73,23 @@ def main() -> int:
         config["sources"]["polymarket"] = False
     if args.no_kalshi:
         config["sources"]["kalshi"] = False
+    if args.no_myriad:
+        config["sources"]["myriad"] = False
+    if args.no_betfair:
+        config["sources"]["betfair"] = False
 
     api_keys = parse_api_keys(os.getenv("ODDS_API_KEY", ""))
     need_api = config["sources"].get("sportsbooks", True)
     if need_api and not api_keys:
-        if config["sources"].get("polymarket") or config["sources"].get("kalshi"):
-            print("提示: 未设置 ODDS_API_KEY，仅扫描预测市场")
+        other_on = any(
+            config["sources"].get(k)
+            for k in ("polymarket", "kalshi", "myriad", "betfair")
+        )
+        if other_on:
+            print("提示: 未设置 ODDS_API_KEY，跳过 The Odds API 博彩源")
             config["sources"]["sportsbooks"] = False
         else:
-            print("错误: 请在 .env 中设置 ODDS_API_KEY，或启用预测市场数据源")
+            print("错误: 请在 .env 中设置 ODDS_API_KEY，或启用其他数据源")
             print("注册地址: https://the-odds-api.com")
             return 1
 

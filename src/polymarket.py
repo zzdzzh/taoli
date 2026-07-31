@@ -17,6 +17,7 @@ from .team_matcher import parse_vs_title
 logger = logging.getLogger(__name__)
 
 GAMMA_URL = "https://gamma-api.polymarket.com"
+CLOB_URL = "https://clob.polymarket.com"
 
 # Polymarket sport code → series_id（来自 /sports 接口）
 POLYMARKET_SERIES: dict[str, str] = {
@@ -72,7 +73,12 @@ class PolymarketClient:
                 continue
             try:
                 events = self._fetch_events(series_id, limit_per_series)
-                parsed = [self._parse_event(e, code) for e in events]
+                clob_asks = self._fetch_clob_buy_prices(
+                    self._collect_yes_token_ids(events)
+                )
+                parsed = [
+                    self._parse_event(e, code, clob_asks) for e in events
+                ]
                 parsed = [m for m in parsed if m is not None]
                 logger.info("Polymarket %s: %d 场比赛", code, len(parsed))
                 all_matches.extend(parsed)
@@ -96,7 +102,10 @@ class PolymarketClient:
                 continue
             if any(kw in title for kw in ("Props", "Halftime", "Exact Score")):
                 continue
-            return self._parse_event(event, "search")
+            clob_asks = self._fetch_clob_buy_prices(
+                self._collect_yes_token_ids([event])
+            )
+            return self._parse_event(event, "search", clob_asks)
 
         return None
 
@@ -120,6 +129,7 @@ class PolymarketClient:
         self,
         event: dict[str, Any],
         league_code: str,
+        clob_asks: dict[str, float] | None = None,
     ) -> MatchOdds | None:
         title = event.get("title", "")
         if not self._is_main_match_event(title):
@@ -131,7 +141,9 @@ class PolymarketClient:
         home, away = teams
 
         commence = self._parse_time(event.get("endDate") or event.get("startDate"))
-        quotes = self._parse_h2h_markets(event.get("markets", []), home, away)
+        quotes = self._parse_h2h_markets(
+            event.get("markets", []), home, away, clob_asks or {},
+        )
         min_quotes = 2 if league_code in POLYMARKET_2WAY_CODES else 3
         if len(quotes) < min_quotes:
             return None
@@ -144,6 +156,103 @@ class PolymarketClient:
             commence_time=commence,
             quotes=quotes,
         )
+
+    @staticmethod
+    def _parse_token_ids(market: dict[str, Any]) -> list[str]:
+        tids = market.get("clobTokenIds")
+        if isinstance(tids, str):
+            try:
+                tids = json.loads(tids)
+            except json.JSONDecodeError:
+                return []
+        if not isinstance(tids, list):
+            return []
+        return [str(t) for t in tids if t]
+
+    @staticmethod
+    def _parse_outcomes(market: dict[str, Any]) -> list[str]:
+        outcomes = market.get("outcomes")
+        if isinstance(outcomes, str):
+            try:
+                outcomes = json.loads(outcomes)
+            except json.JSONDecodeError:
+                return []
+        if not isinstance(outcomes, list):
+            return []
+        return [str(o) for o in outcomes]
+
+    def _collect_yes_token_ids(self, events: list[dict[str, Any]]) -> list[str]:
+        """收集需询价的 token：moneyline 取全部 outcome；其余 Yes/No 市场取 YES(=首个)"""
+        ids: list[str] = []
+        seen: set[str] = set()
+        skip_types = {
+            "spreads", "totals", "points", "rebounds", "assists",
+            "soccer_exact_score", "soccer_total_goals",
+        }
+        for event in events:
+            for market in event.get("markets") or []:
+                smt = (market.get("sportsMarketType") or "").lower()
+                if smt in skip_types:
+                    continue
+                tids = self._parse_token_ids(market)
+                if not tids:
+                    continue
+                if smt == "moneyline":
+                    wanted = tids
+                else:
+                    # 传统 Home/Draw/Away 独立 Yes/No 市场
+                    group = (market.get("groupItemTitle") or "").strip()
+                    if not group or self._is_non_h2h_market(group):
+                        continue
+                    wanted = tids[:1]
+                for tid in wanted:
+                    if tid not in seen:
+                        seen.add(tid)
+                        ids.append(tid)
+        return ids
+
+    def _fetch_clob_buy_prices(self, token_ids: list[str]) -> dict[str, float]:
+        """
+        从 CLOB 批量拉取可成交买入价（side=BUY = best ask）。
+        文档: https://docs.polymarket.com/market-data/prices-order-books
+        """
+        result: dict[str, float] = {}
+        if not token_ids:
+            return result
+
+        chunk = 100
+        for i in range(0, len(token_ids), chunk):
+            part = token_ids[i : i + chunk]
+            payload = [{"token_id": tid, "side": "BUY"} for tid in part]
+            try:
+                resp = self.session.post(
+                    f"{CLOB_URL}/prices",
+                    json=payload,
+                    timeout=self.timeout,
+                )
+                resp.raise_for_status()
+                body = resp.json()
+            except requests.RequestException as e:
+                logger.warning("Polymarket CLOB /prices 失败: %s", e)
+                continue
+
+            if not isinstance(body, dict):
+                continue
+            for tid, sides in body.items():
+                if not isinstance(sides, dict):
+                    continue
+                raw = sides.get("BUY")
+                if raw is None:
+                    continue
+                try:
+                    price = float(raw)
+                except (TypeError, ValueError):
+                    continue
+                if 0 < price < 1:
+                    result[str(tid)] = price
+
+        logger.info("Polymarket CLOB 买价: %d/%d", len(result), len(token_ids))
+        return result
 
     @staticmethod
     def _is_main_match_event(title: str) -> bool:
@@ -161,18 +270,32 @@ class PolymarketClient:
         markets: list[dict[str, Any]],
         home: str,
         away: str,
+        clob_asks: dict[str, float],
     ) -> list[OddsQuote]:
-        """解析胜平负三个市场（严格过滤，排除让球盘/大小球）"""
-        quotes: list[OddsQuote] = []
+        """解析胜平负/胜负盘；只用可成交买价（CLOB ask / Gamma bestAsk）"""
         home_norm = home.lower().strip()
         away_norm = away.lower().strip()
 
+        moneyline_quotes: list[OddsQuote] = []
+        group_quotes: list[OddsQuote] = []
+
         for market in markets:
+            smt = (market.get("sportsMarketType") or "").lower()
+            if smt == "moneyline":
+                moneyline_quotes.extend(
+                    self._parse_moneyline_market(market, home_norm, away_norm, clob_asks)
+                )
+                continue
+
+            if smt in {
+                "spreads", "totals", "points", "rebounds", "assists",
+                "soccer_exact_score", "soccer_total_goals",
+            }:
+                continue
+
             group_title = (market.get("groupItemTitle") or "").strip()
             if not group_title:
                 continue
-
-            # 排除让球盘、大小球等非胜平负市场
             if self._is_non_h2h_market(group_title):
                 continue
 
@@ -180,33 +303,90 @@ class PolymarketClient:
             if outcome is None:
                 continue
 
-            ask = market.get("bestAsk")
+            tids = self._parse_token_ids(market)
+            ask = self._price_for_token(
+                tids[0] if tids else None,
+                clob_asks,
+                fallback_ask=market.get("bestAsk"),
+            )
             if ask is None:
-                prices = market.get("outcomePrices")
-                if prices:
-                    if isinstance(prices, str):
-                        prices = json.loads(prices)
-                    ask = float(prices[0]) if prices else None
-
-            if ask is None or ask <= 0:
                 continue
 
-            odds = polymarket_price_to_odds(float(ask))
+            odds = polymarket_price_to_odds(ask)
             if odds <= 1.0:
                 continue
 
-            quotes.append(
+            group_quotes.append(
                 OddsQuote(
                     bookmaker="polymarket",
                     outcome=outcome,
                     odds=odds,
                     outcome_name=group_title,
                     platform="prediction",
-                    raw_price=float(ask),
+                    raw_price=ask,
                 )
             )
 
+        # 新版体育盘优先用 moneyline；旧版 Home/Draw/Away 独立市场作回退
+        return moneyline_quotes or group_quotes
+
+    def _parse_moneyline_market(
+        self,
+        market: dict[str, Any],
+        home_norm: str,
+        away_norm: str,
+        clob_asks: dict[str, float],
+    ) -> list[OddsQuote]:
+        """二元 moneyline：outcomes=[主,客] 对应两个 CLOB token"""
+        outcomes = self._parse_outcomes(market)
+        tids = self._parse_token_ids(market)
+        if len(outcomes) < 2 or len(tids) < 2:
+            return []
+
+        quotes: list[OddsQuote] = []
+        for idx, name in enumerate(outcomes):
+            outcome = self._map_outcome(name, home_norm, away_norm)
+            if outcome is None:
+                continue
+            # 市场级 bestAsk 通常只对应第一个 outcome，仅作首腿弱回退
+            fallback = market.get("bestAsk") if idx == 0 else None
+            ask = self._price_for_token(tids[idx], clob_asks, fallback_ask=fallback)
+            if ask is None:
+                continue
+            odds = polymarket_price_to_odds(ask)
+            if odds <= 1.0:
+                continue
+            quotes.append(
+                OddsQuote(
+                    bookmaker="polymarket",
+                    outcome=outcome,
+                    odds=odds,
+                    outcome_name=name,
+                    platform="prediction",
+                    raw_price=ask,
+                )
+            )
         return quotes
+
+    @staticmethod
+    def _price_for_token(
+        token_id: str | None,
+        clob_asks: dict[str, float],
+        fallback_ask: Any = None,
+    ) -> float | None:
+        """优先 CLOB best ask；否则 Gamma bestAsk。不用 outcomePrices。"""
+        if token_id and token_id in clob_asks:
+            price = clob_asks[token_id]
+            if 0 < price < 1:
+                return price
+        if fallback_ask is not None:
+            try:
+                price = float(fallback_ask)
+            except (TypeError, ValueError):
+                return None
+            if 0 < price < 1:
+                return price
+        return None
 
     @staticmethod
     def _is_non_h2h_market(title: str) -> bool:

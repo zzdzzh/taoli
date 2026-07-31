@@ -76,7 +76,7 @@ function toggleSidebar() {
 <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
 <div class="sidebar">
     <h2>套利扫描</h2>
-    <div class="subtitle">Odds API + Polymarket + Kalshi<br>每 60 秒自动刷新页面</div>
+    <div class="subtitle">Odds API + Polymarket + Kalshi + Myriad + Betfair<br>每 60 秒自动刷新页面</div>
     <div class="date-group">
         <a href="/" class="{{ 'active' if not selected else '' }}">最新报告</a>
     </div>
