@@ -121,5 +121,18 @@ taoli/
 - 实际套利需考虑：手续费、滑点、限额、资金到账时间
 - 大赛（世界杯）流动性高但套利窗口短；小联赛偏差大但流动性低
 
+## 使用方法
+
+
+
+```
 nohup python3 main.py --loop > scan.log 2>&1 & gunicorn -w 2 -b 0.0.0.0:80 web:app > web.log 2>&1 &
+
 nohup python3 simulate.py live --loop --interval 180 > scan.log 2>&1 & gunicorn -w 2 -b 0.0.0.0:80 web:app > web.log 2>&1 &
+
+pkill -f "simulate.py"
+
+pkill -f "gunicorn"
+
+ps aux | grep -E "simulate.py|gunicorn" | grep -v grep
+```

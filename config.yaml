@@ -25,6 +25,8 @@ sources:
     # 篮球
     - nba                 # NBA
     - wnba                # WNBA
+    # 棒球
+    - mlb                 # MLB
   # 网球
     - atp                 # ATP
     - wta                 # WTA

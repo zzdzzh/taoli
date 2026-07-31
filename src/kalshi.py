@@ -5,7 +5,7 @@ from __future__ import annotations
 import logging
 import re
 import time
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from typing import Any
 
 import requests
@@ -15,7 +15,7 @@ from .models import MatchOdds, OddsQuote
 
 logger = logging.getLogger(__name__)
 
-KALSHI_URL = "https://api.elections.kalshi.com/trade-api/v2"
+KALSHI_URL = "https://external-api.kalshi.com/trade-api/v2"
 
 # Kalshi 体育 series ticker
 KALSHI_SOCCER_SERIES: dict[str, str] = {
@@ -183,7 +183,11 @@ class KalshiClient:
         if len(quotes) < min_quotes:
             return None
 
-        commence = self._parse_close_time(close_time)
+        # 优先用 occurrence_datetime（实际比赛结束时间），估算开始时间，其次 close_time
+        game_time = markets[0].get("occurrence_datetime") or close_time
+        commence = self._parse_close_time(game_time)
+        # 将结束时间减去 3 小时估算为开始时间，统一与 Polymarket endDate 对齐
+        commence = commence - timedelta(hours=3)
 
         return MatchOdds(
             sport=f"kalshi_{league_code}",
@@ -257,15 +261,18 @@ class KalshiClient:
         if m:
             return m.group(1).strip(), m.group(2).strip()
 
-        # 篮球/足球: "France vs Spain Winner?"
-        m = re.search(r"(.+?)\s+(?:vs\.?|v)\s+(.+?)(?:\s+Winner)?\??$", title, re.I)
+        # 常规 "TeamA vs TeamB" 格式，截断 "women's / men's / professional" 等后缀
+        m = re.search(
+            r"^(.+?)\s+(?:vs\.?|v)\s+(.+?)(?:\s+(?:women's|men's|professional|pro).*)?$",
+            title, re.I,
+        )
         if m:
             home = m.group(1).strip()
             away = m.group(2).strip()
 
         if not home or not away:
             rules = markets[0].get("rules_primary", "")
-            m = re.search(r"(.+?)\s+vs\.?\s+(.+?)\s+professional", rules, re.I)
+            m = re.search(r"(.+?)\s+vs\.?\s+(.+?)(?:\s+(?:women's|men's|professional|pro).*)?$", rules, re.I)
             if m:
                 home = m.group(1).strip()
                 away = m.group(2).strip()

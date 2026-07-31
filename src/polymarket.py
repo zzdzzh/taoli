@@ -41,13 +41,15 @@ POLYMARKET_SERIES: dict[str, str] = {
     "nba": "10345",
     "wnba": "10105",
     "euroleague": "10371",
+    # 棒球
+    "mlb": "3",
     # 网球
     "atp": "10365",
     "wta": "10366",
 }
 
 # 胜负盘（无二项平局）联赛
-POLYMARKET_2WAY_CODES = frozenset({"nba", "wnba", "atp", "wta", "euroleague"})
+POLYMARKET_2WAY_CODES = frozenset({"nba", "wnba", "atp", "wta", "euroleague", "mlb"})
 
 
 class PolymarketClient:
@@ -294,7 +296,41 @@ class PolymarketClient:
                 continue
 
             group_title = (market.get("groupItemTitle") or "").strip()
+
+            # 处理 groupItemTitle 为空的情况（MLB 等联赛的 moneyline 市场）
             if not group_title:
+                outcomes = market.get("outcomes")
+                outcome_prices = market.get("outcomePrices")
+                if outcomes and outcome_prices:
+                    if isinstance(outcomes, str):
+                        outcomes = json.loads(outcomes)
+                    if isinstance(outcome_prices, str):
+                        outcome_prices = json.loads(outcome_prices)
+                    if len(outcomes) == 2 and len(outcome_prices) == 2:
+                        for team_name, price_str in zip(outcomes, outcome_prices):
+                            price = float(price_str)
+                            if price <= 0:
+                                continue
+                            odds = polymarket_price_to_odds(price)
+                            if odds <= 1.0:
+                                continue
+                            team_lower = team_name.lower().strip()
+                            if team_lower == home_norm:
+                                outcome = "home"
+                            elif team_lower == away_norm:
+                                outcome = "away"
+                            else:
+                                continue
+                            quotes.append(
+                                OddsQuote(
+                                    bookmaker="polymarket",
+                                    outcome=outcome,
+                                    odds=odds,
+                                    outcome_name=team_name,
+                                    platform="prediction",
+                                    raw_price=price,
+                                )
+                            )
                 continue
             if self._is_non_h2h_market(group_title):
                 continue
