@@ -230,7 +230,7 @@ class PolymarketClient:
 
     def _fetch_clob_buy_prices(self, token_ids: list[str]) -> dict[str, float]:
         """
-        从 CLOB 批量拉取可成交买入价（side=BUY = best ask）。
+        从 CLOB 批量拉取可成交买入价（side=SELL = best ask，即买入 YES 的真实成交价）。
         文档: https://docs.polymarket.com/market-data/prices-order-books
         """
         result: dict[str, float] = {}
@@ -240,7 +240,7 @@ class PolymarketClient:
         chunk = 100
         for i in range(0, len(token_ids), chunk):
             part = token_ids[i : i + chunk]
-            payload = [{"token_id": tid, "side": "BUY"} for tid in part]
+            payload = [{"token_id": tid, "side": "SELL"} for tid in part]
             try:
                 resp = self.session.post(
                     f"{CLOB_URL}/prices",
@@ -258,7 +258,7 @@ class PolymarketClient:
             for tid, sides in body.items():
                 if not isinstance(sides, dict):
                     continue
-                raw = sides.get("BUY")
+                raw = sides.get("SELL")
                 if raw is None:
                     continue
                 try:
