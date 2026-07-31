@@ -277,6 +277,14 @@ class KalshiClient:
         if m:
             return m.group(1).strip(), m.group(2).strip()
 
+        # NFL/NBA 等: "Will Seattle win the Dallas vs Seattle Pro Football game?"
+        m = re.search(
+            r"win the (.+?) vs\.?\s+(.+?)(?:\s+(?:women's|men's|professional|pro|game).*)?$",
+            title, re.I,
+        )
+        if m:
+            return m.group(1).strip(), m.group(2).strip()
+
         # 常规 "TeamA vs TeamB" 格式，截断 "women's / men's / professional" 等后缀
         m = re.search(
             r"^(.+?)\s+(?:vs\.?|v)\s+(.+?)(?:\s+(?:women's|men's|professional|pro).*)?$",

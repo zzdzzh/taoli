@@ -82,13 +82,21 @@ def parse_vs_title(title: str) -> tuple[str, str] | None:
     - "France vs. Spain"
     - "France vs Spain"
     - "England v Argentina"
+    - "Geneva Open: Cameron Norrie vs Mariano Navone"
     """
+    text = title.strip()
+    # 去掉赛事名前缀（冒号须出现在 vs 之前）
+    vs_m = re.search(r"\s+vs\.?\s+|\s+v\s+", text, re.IGNORECASE)
+    colon = text.find(":")
+    if vs_m and colon >= 0 and colon < vs_m.start():
+        text = text[colon + 1:].strip()
+
     patterns = [
         r"^(.+?)\s+vs\.?\s+(.+?)$",
         r"^(.+?)\s+v\s+(.+?)$",
     ]
     for pattern in patterns:
-        m = re.match(pattern, title.strip(), re.IGNORECASE)
+        m = re.match(pattern, text, re.IGNORECASE)
         if m:
             home = m.group(1).strip()
             away = m.group(2).strip()

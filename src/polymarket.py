@@ -274,7 +274,7 @@ class PolymarketClient:
         skip_keywords = (
             "Props", "Halftime", "Half Time", "Exact Score",
             "First Team", "Second Half", "advance", "Winner",
-            "Both Teams", "Total Goals", "O/U", "Spread",
+            "Both Teams", "Total Goals", "Total Corners", "O/U", "Spread",
         )
         return not any(kw.lower() in title.lower() for kw in skip_keywords)
 
@@ -294,7 +294,10 @@ class PolymarketClient:
 
         for market in markets:
             smt = (market.get("sportsMarketType") or "").lower()
-            if smt == "moneyline":
+            group_title = (market.get("groupItemTitle") or "").strip()
+
+            # 二元 moneyline（outcomes=队名，无 groupItemTitle），如 MLB/ATP
+            if smt == "moneyline" and not group_title:
                 moneyline_quotes.extend(
                     self._parse_moneyline_market(market, home_norm, away_norm, clob_asks)
                 )
@@ -305,8 +308,6 @@ class PolymarketClient:
                 "soccer_exact_score", "soccer_total_goals",
             }:
                 continue
-
-            group_title = (market.get("groupItemTitle") or "").strip()
 
             # groupItemTitle 为空：若有 outcomes+token，按 moneyline 用 CLOB 询价（禁用 outcomePrices）
             if not group_title:
