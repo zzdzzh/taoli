@@ -57,6 +57,11 @@ def _save_last_fps(path: Path, fingerprints: Iterable[str]) -> None:
         json.dump(payload, f, ensure_ascii=False, indent=2)
 
 
+def _is_cross_bookmaker(opp: ArbitrageOpportunity) -> bool:
+    """至少两个不同庄家，排除同平台双边"""
+    return len({leg.bookmaker for leg in opp.legs}) >= 2
+
+
 def _exec_metrics(
     opp: ArbitrageOpportunity,
     slippage_pct: float,
@@ -112,10 +117,11 @@ def build_template_card(
         if idx is not None:
             odds_parts[idx] = _format_leg(leg, labels.get(leg.outcome, leg.outcome))
 
-    # shouru：以扣费后净收益为主，附带毛理论与 S，避免再推虚高「理论收益」
+    # 模板文案写的是「理论收益」：主数字用毛理论 (1/S-1)；净收益另附，避免把扣费后净值误标成理论
+    # 例: 5.18%（净2.44%｜费230｜S0.9507→0.955）
     shouru = (
-        f"净{net_pct:.2f}% (毛{opp.profit_pct:.2f}% / "
-        f"S {opp.arb_index:.4f}→{adjusted_s:.4f} / 费{total_fees:.0f})"
+        f"{opp.profit_pct:.2f}%（净{net_pct:.2f}%｜"
+        f"费{total_fees:.0f}｜S{opp.arb_index:.4f}→{adjusted_s:.4f}）"
     )
 
     return {
@@ -181,10 +187,21 @@ def notify_new_opportunities(
     current_fps = set(current_map.keys())
     last_fps = _load_last_fps(path)
     new_fps = current_fps - last_fps
-    new_opps = [current_map[fp] for fp in sorted(new_fps)]
+    new_opps = [
+        current_map[fp]
+        for fp in sorted(new_fps)
+        if _is_cross_bookmaker(current_map[fp])
+    ]
+    skipped_same = sum(
+        1 for fp in new_fps if not _is_cross_bookmaker(current_map[fp])
+    )
+    if skipped_same:
+        logger.info("跳过 %d 个同平台机会（不推飞书）", skipped_same)
 
     if not new_opps:
-        logger.debug("无新套利机会，跳过飞书通知")
+        logger.debug("无新跨平台套利机会，跳过飞书通知")
+        # 仍更新去重基线，避免同平台垃圾机会反复占位
+        _save_last_fps(path, current_fps)
         return []
 
     # 每条机会单独发一张卡片（内容为扣费后可执行数据）
