@@ -32,16 +32,21 @@ KALSHI_SOCCER_SERIES: dict[str, str] = {
     "ucl": "KXUCLGAME",
     "worldcup": "KXWCGAME",
     "mls": "KXMLSGAME",
+    "uel": "KXUELGAME",
     # 篮球
     "nba": "KXNBAGAME",
     "wnba": "KXWNBAGAME",
+    # 棒球 / 冰球 / 美式足球
+    "mlb": "KXMLBGAME",
+    "nhl": "KXNHLGAME",
+    "nfl": "KXNFLGAME",
     # 网球
     "atp": "KXATPMATCH",
     "wta": "KXWTAMATCH",
 }
 
 # 胜负盘（无平局）联赛
-KALSHI_2WAY_CODES = frozenset({"nba", "wnba", "atp", "wta"})
+KALSHI_2WAY_CODES = frozenset({"nba", "wnba", "atp", "wta", "mlb", "nhl", "nfl"})
 
 
 class KalshiClient:

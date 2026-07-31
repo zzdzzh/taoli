@@ -22,11 +22,16 @@ sources:
     - bra                 # 巴西甲
     - jap                 # 日本J联赛
     - kor                 # 韩国K联赛
+    # 足球补覆盖
+    - mls                 # 美职联
+    - uel                 # 欧联杯
     # 篮球
     - nba                 # NBA
     - wnba                # WNBA
-    # 棒球
+    # 棒球 / 冰球 / 美式足球
     - mlb                 # MLB
+    - nhl                 # NHL
+    - nfl                 # NFL
   # 网球
     - atp                 # ATP
     - wta                 # WTA
@@ -40,9 +45,15 @@ sources:
     - seriea              # 意甲
     - ligue1              # 法甲
     - ucl                 # 欧冠
+    - mls                 # 美职联
+    - uel                 # 欧联杯
     # 篮球
     - nba
     - wnba
+    # 棒球 / 冰球 / 美式足球
+    - mlb
+    - nhl
+    - nfl
     # 网球
     - atp
     - wta
@@ -103,12 +114,18 @@ sports:
   - soccer_france_ligue_one
   - soccer_italy_serie_a
   - soccer_uefa_champs_league
+  - soccer_uefa_europa_league
+  - soccer_usa_mls
   - soccer_fifa_world_cup
   # 篮球（胜负）
   - basketball_nba
   - basketball_wnba
   - basketball_ncaab
   - basketball_euroleague
+  # 棒球 / 冰球 / 美式足球（胜负）
+  - baseball_mlb
+  - icehockey_nhl
+  - americanfootball_nfl
   # 网球（胜负，按赛季开放）
   - tennis_atp_wimbledon
   - tennis_atp_us_open

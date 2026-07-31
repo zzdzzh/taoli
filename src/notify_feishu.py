@@ -11,7 +11,7 @@ from typing import Any, Iterable
 import requests
 
 from .converters import utc_to_china_str
-from .models import ArbitrageOpportunity
+from .models import ArbitrageOpportunity, MatchOdds, OddsQuote
 from .paper_trade import PaperLeg, apply_execution_costs
 
 logger = logging.getLogger(__name__)
@@ -97,6 +97,57 @@ def _format_leg(leg: PaperLeg, outcome_label: str) -> str:
     )
 
 
+def _format_market_snapshot(
+    match: MatchOdds,
+    selected: dict[str, str],
+    *,
+    max_per_outcome: int = 4,
+) -> str:
+    """
+    本场各平台赔率一览（按结果分行，选中腿标 ★）。
+    控制长度，方便卡片阅读。
+    """
+    labels = {"home": "主胜", "draw": "平局", "away": "客胜"}
+    order = ("home", "draw", "away")
+    lines = ["**各平台报价**"]
+
+    for oc in order:
+        quotes = [q for q in match.quotes if q.outcome == oc and q.odds > 1]
+        if not quotes:
+            continue
+        # 同庄家只保留最高赔
+        by_bk: dict[str, OddsQuote] = {}
+        for q in quotes:
+            cur = by_bk.get(q.bookmaker)
+            if cur is None or q.odds > cur.odds:
+                by_bk[q.bookmaker] = q
+        ranked = sorted(by_bk.values(), key=lambda q: q.odds, reverse=True)
+
+        chosen_bk = selected.get(oc, "")
+        # 确保选中庄家出现在列表里
+        head: list[OddsQuote] = []
+        for q in ranked:
+            if q.bookmaker == chosen_bk:
+                head.append(q)
+                break
+        for q in ranked:
+            if q.bookmaker == chosen_bk:
+                continue
+            head.append(q)
+            if len(head) >= max_per_outcome:
+                break
+
+        parts: list[str] = []
+        for q in head:
+            star = "★" if q.bookmaker == chosen_bk else ""
+            parts.append(f"{star}{q.bookmaker} {q.odds:.2f}")
+        lines.append(f"{labels[oc]}: " + " · ".join(parts))
+
+    if len(lines) <= 1:
+        return ""
+    return "\n".join(lines)
+
+
 def build_template_card(
     opp: ArbitrageOpportunity,
     *,
@@ -112,17 +163,32 @@ def build_template_card(
 
     odds_parts = ["", "", ""]
     labels = {"home": "主胜", "draw": "平局", "away": "客胜"}
+    selected_bk = {leg.outcome: leg.bookmaker for leg in paper_legs}
     for leg in paper_legs:
         idx = {"home": 0, "draw": 1, "away": 2}.get(leg.outcome)
         if idx is not None:
             odds_parts[idx] = _format_leg(leg, labels.get(leg.outcome, leg.outcome))
 
-    # 模板文案写的是「理论收益」：主数字用毛理论 (1/S-1)；净收益另附，避免把扣费后净值误标成理论
-    # 例: 5.18%（净2.44%｜费230｜S0.9507→0.955）
+    snapshot = _format_market_snapshot(m, selected_bk)
+
+    # 二项盘：平局栏空着 → 把「各平台报价」放进 odds2，现有卡片不用改模板也能看到
+    # 三项盘：三栏已满 → 写入 beizhu（需在飞书模板增加变量 beizhu；没有也不影响主内容）
+    beizhu = ""
+    if snapshot:
+        if not odds_parts[1]:
+            odds_parts[1] = snapshot
+        else:
+            beizhu = snapshot
+
+    # 模板文案写的是「理论收益」：主数字用毛理论；净收益另附
     shouru = (
         f"{opp.profit_pct:.2f}%（净{net_pct:.2f}%｜"
         f"费{total_fees:.0f}｜S{opp.arb_index:.4f}→{adjusted_s:.4f}）"
     )
+
+    # 联赛旁带平台数，一眼可知覆盖广度
+    n_books = len({q.bookmaker for q in m.quotes})
+    liansai = f"{m.league} · {n_books}平台"
 
     return {
         "msg_type": "interactive",
@@ -134,12 +200,13 @@ def build_template_card(
                 "template_variable": {
                     "team1": m.home_team,
                     "team2": m.away_team,
-                    "liansai": m.league,
+                    "liansai": liansai,
                     "shijian": utc_to_china_str(m.commence_time),
                     "shouru": shouru,
                     "odds1": odds_parts[0],
                     "odds2": odds_parts[1],
                     "odds3": odds_parts[2],
+                    "beizhu": beizhu,
                 },
             },
         },

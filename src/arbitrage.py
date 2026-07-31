@@ -29,6 +29,7 @@ TWO_WAY_SPORT_PREFIXES = (
 # Polymarket / Kalshi 联赛代码 → 二项盘
 TWO_WAY_PLATFORM_CODES = frozenset({
     "nba", "wnba", "atp", "wta", "euroleague", "cwbb", "ncaab",
+    "mlb", "nhl", "nfl",
 })
 
 

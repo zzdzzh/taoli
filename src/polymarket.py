@@ -48,15 +48,19 @@ POLYMARKET_SERIES: dict[str, str] = {
     "nba": "10345",
     "wnba": "10105",
     "euroleague": "10371",
-    # 棒球
+    # 棒球 / 冰球 / 美式足球
     "mlb": "3",
+    "nhl": "10346",
+    "nfl": "10187",
     # 网球
     "atp": "10365",
     "wta": "10366",
 }
 
 # 胜负盘（无二项平局）联赛
-POLYMARKET_2WAY_CODES = frozenset({"nba", "wnba", "atp", "wta", "euroleague", "mlb"})
+POLYMARKET_2WAY_CODES = frozenset({
+    "nba", "wnba", "atp", "wta", "euroleague", "mlb", "nhl", "nfl",
+})
 
 
 class PolymarketClient:
