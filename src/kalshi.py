@@ -270,12 +270,33 @@ class KalshiClient:
         """从市场数据推断主客队"""
         home, away = "", ""
 
+        def _clean(name: str) -> str:
+            name = re.sub(r"^Reg Time:\s*", "", name, flags=re.I).strip()
+            name = re.sub(r"\s*Winner\??$", "", name, flags=re.I).strip()
+            return name
+
+        # 优先用 yes_sub_title（城市/队名干净，避免标题里的 Winner?）
+        teams: list[str] = []
+        for market in markets:
+            subtitle = (
+                market.get("yes_sub_title")
+                or market.get("subtitle")
+                or ""
+            )
+            team = _clean(subtitle)
+            if not team or team.lower() in ("tie", "draw"):
+                continue
+            if team not in teams:
+                teams.append(team)
+        if len(teams) >= 2:
+            return teams[0], teams[1]
+
         title = markets[0].get("title", "")
 
         # 网球: "Will Quentin Halys win the Cina vs Halys: Round Of 32 match?"
         m = re.search(r"win the (.+?) vs\.?\s+(.+?)\s*:", title, re.I)
         if m:
-            return m.group(1).strip(), m.group(2).strip()
+            return _clean(m.group(1)), _clean(m.group(2))
 
         # NFL/NBA 等: "Will Seattle win the Dallas vs Seattle Pro Football game?"
         m = re.search(
@@ -283,35 +304,26 @@ class KalshiClient:
             title, re.I,
         )
         if m:
-            return m.group(1).strip(), m.group(2).strip()
+            return _clean(m.group(1)), _clean(m.group(2))
 
-        # 常规 "TeamA vs TeamB" 格式，截断 "women's / men's / professional" 等后缀
+        # 常规 "TeamA vs TeamB" 格式
         m = re.search(
             r"^(.+?)\s+(?:vs\.?|v)\s+(.+?)(?:\s+(?:women's|men's|professional|pro).*)?$",
             title, re.I,
         )
         if m:
-            home = m.group(1).strip()
-            away = m.group(2).strip()
+            home = _clean(m.group(1))
+            away = _clean(m.group(2))
 
         if not home or not away:
             rules = markets[0].get("rules_primary", "")
-            m = re.search(r"(.+?)\s+vs\.?\s+(.+?)(?:\s+(?:women's|men's|professional|pro).*)?$", rules, re.I)
+            m = re.search(
+                r"(.+?)\s+vs\.?\s+(.+?)(?:\s+(?:women's|men's|professional|pro).*)?$",
+                rules, re.I,
+            )
             if m:
-                home = m.group(1).strip()
-                away = m.group(2).strip()
-
-        if not home or not away:
-            for market in markets:
-                subtitle = market.get("yes_sub_title", "")
-                team = re.sub(r"^Reg Time:\s*", "", subtitle).strip()
-                if team.lower() in ("tie", "draw"):
-                    continue
-                if team:
-                    if not home:
-                        home = team
-                    elif team != home:
-                        away = team
+                home = _clean(m.group(1))
+                away = _clean(m.group(2))
 
         return home, away
 

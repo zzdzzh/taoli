@@ -153,7 +153,11 @@ class PolymarketClient:
             return None
         home, away = teams
 
-        commence = self._parse_time(event.get("endDate") or event.get("startDate"))
+        commence = self._parse_time(
+            event.get("startTime")
+            or event.get("endDate")
+            or event.get("startDate")
+        )
         quotes = self._parse_h2h_markets(
             event.get("markets", []), home, away, clob_asks or {},
         )

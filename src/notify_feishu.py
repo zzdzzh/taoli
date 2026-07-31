@@ -1,4 +1,4 @@
-"""飞书机器人通知：使用卡片模板推送新套利机会（扣费后的可执行数据）"""
+"""飞书机器人通知：使用卡片模板推送新套利机会（理论收益 + 扣费后执行明细）"""
 
 from __future__ import annotations
 
@@ -171,20 +171,28 @@ def build_template_card(
 
     snapshot = _format_market_snapshot(m, selected_bk)
 
-    # 二项盘：平局栏空着 → 把「各平台报价」放进 odds2，现有卡片不用改模板也能看到
+    # 扣费说明（滑点/佣金后），不占用「理论收益」主数字
+    cost_note = (
+        f"扣费后约 {net_pct:.2f}%（费{total_fees:.0f}｜"
+        f"S {opp.arb_index:.4f}→{adjusted_s:.4f}）"
+    )
+
+    # 二项盘：平局栏空着 → 把「各平台报价」+ 扣费说明放进 odds2
     # 三项盘：三栏已满 → 写入 beizhu（需在飞书模板增加变量 beizhu；没有也不影响主内容）
     beizhu = ""
     if snapshot:
         if not odds_parts[1]:
-            odds_parts[1] = snapshot
+            odds_parts[1] = f"{snapshot}\n{cost_note}"
         else:
-            beizhu = snapshot
+            beizhu = f"{cost_note}\n{snapshot}"
+    else:
+        if not odds_parts[1]:
+            odds_parts[1] = cost_note
+        else:
+            beizhu = cost_note
 
-    # 模板文案写的是「理论收益」：主数字用毛理论；净收益另附
-    shouru = (
-        f"{opp.profit_pct:.2f}%（净{net_pct:.2f}%｜"
-        f"费{total_fees:.0f}｜S{opp.arb_index:.4f}→{adjusted_s:.4f}）"
-    )
+    # 模板文案是「理论收益」→ 与控制台一致，用毛理论 profit_pct
+    shouru = f"{opp.profit_pct:.2f}%"
 
     # 联赛旁带平台数，一眼可知覆盖广度
     n_books = len({q.bookmaker for q in m.quotes})
@@ -271,7 +279,7 @@ def notify_new_opportunities(
         _save_last_fps(path, current_fps)
         return []
 
-    # 每条机会单独发一张卡片（内容为扣费后可执行数据）
+    # 每条机会单独发一张卡片（主数字=理论收益；腿上带报价→执行价）
     success = True
     for opp in new_opps:
         payload = build_template_card(
@@ -283,7 +291,7 @@ def notify_new_opportunities(
 
     if success:
         _save_last_fps(path, current_fps)
-        logger.info("已向飞书推送 %d 个新套利机会（扣费后净收益）", len(new_opps))
+        logger.info("已向飞书推送 %d 个新套利机会", len(new_opps))
     else:
         logger.warning("飞书推送未全部成功，本次不更新去重记录，下次仍会重试")
 
