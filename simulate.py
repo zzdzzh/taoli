@@ -120,7 +120,10 @@ def cmd_demo(args: argparse.Namespace) -> int:
         print(f"--- 场景 {i}: {label} ---")
         best = find_best_quotes(match)
         s = calc_arb_index(best)
-        print(f"  套利指数 S = {s:.4f} | 理论收益 = {calc_profit_pct(s):.2f}%")
+        if s is None:
+            print("  推荐组合: 未找到所有结果均来自不同平台的组合")
+        else:
+            print(f"  套利指数 S = {s:.4f} | 理论收益 = {calc_profit_pct(s):.2f}%")
 
         r = simulate_scenario(
             match, result,

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from itertools import product
 from typing import Optional
 
 from .models import ArbitrageLeg, ArbitrageOpportunity, MatchOdds, OddsQuote
@@ -61,21 +62,43 @@ def infer_outcomes(match: MatchOdds) -> tuple[str, ...]:
 
 def find_best_quotes(match: MatchOdds) -> dict[str, OddsQuote]:
     """
-    对每个结果，在所有平台中选取最高赔率。
+    选出一组各平台不重复、且套利指数最低的结果报价。
+
+    Polymarket、Kalshi 等预测市场的各结果共享同一盘口；买入其中一边
+    可能会改变另一边的价格。因此，同一场比赛的推荐组合不能使用同一
+    平台的多条报价。若无法为所有结果凑出平台互异的组合，返回空字典，
+    表示该场没有可推荐的完整组合。
 
     返回: { "home": OddsQuote, "draw": OddsQuote, "away": OddsQuote }
     若某结果无报价则不在字典中。
     """
-    best: dict[str, OddsQuote] = {}
+    outcomes = infer_outcomes(match)
+    candidates: dict[str, dict[str, OddsQuote]] = {outcome: {} for outcome in outcomes}
 
+    # 同一平台对同一结果有多条报价时，只保留最高的一条，避免无意义组合。
     for quote in match.quotes:
-        if quote.outcome not in VALID_OUTCOMES:
+        if quote.outcome not in candidates or quote.odds <= 1.0:
             continue
-        current = best.get(quote.outcome)
+        current = candidates[quote.outcome].get(quote.bookmaker)
         if current is None or quote.odds > current.odds:
-            best[quote.outcome] = quote
+            candidates[quote.outcome][quote.bookmaker] = quote
 
-    return best
+    if any(not candidates[outcome] for outcome in outcomes):
+        return {}
+
+    best_combo: tuple[OddsQuote, ...] | None = None
+    best_index: float | None = None
+    for combo in product(*(candidates[outcome].values() for outcome in outcomes)):
+        if len({quote.bookmaker for quote in combo}) != len(combo):
+            continue
+        arb_index = sum(1.0 / quote.odds for quote in combo)
+        if best_index is None or arb_index < best_index:
+            best_combo = combo
+            best_index = arb_index
+
+    if best_combo is None:
+        return {}
+    return dict(zip(outcomes, best_combo))
 
 
 def calc_arb_index(

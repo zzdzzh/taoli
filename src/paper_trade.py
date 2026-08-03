@@ -396,7 +396,7 @@ def simulate_scenario(
         return {
             "tradeable": False,
             "arb_index": s,
-            "reason": f"S={s:.4f}，不满足开仓条件",
+            "reason": (f"S={s:.4f}，不满足开仓条件" if s is not None else "没有平台互异的完整推荐组合"),
         }
 
     paper_legs, total_fees, adjusted_s = apply_execution_costs(
