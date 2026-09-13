@@ -23,6 +23,7 @@ from src.paper_trade import DEFAULT_FEE_RATES  # noqa: E402
 CACHE_CANDIDATES = (
     ROOT / "data" / "all_sources_cache.json",
     ROOT / "data" / "sportsbooks_cache.json",
+    ROOT / "data" / "test_cache.json",  # 合成测试数据
 )
 
 
@@ -51,7 +52,11 @@ def main() -> None:
 
     cache_path = next((p for p in CACHE_CANDIDATES if p.exists()), None)
     if cache_path is None:
-        raise SystemExit("缺少缓存，请先运行 scripts/build_all_sources_cache.py")
+        print("❌ 缺少缓存数据")
+        print("\n可选操作:")
+        print("  1. 生成测试缓存: python scripts/generate_test_cache.py")
+        print("  2. 拉取真实数据: python scripts/build_all_sources_cache.py")
+        raise SystemExit(1)
 
     data = json.loads(cache_path.read_text(encoding="utf-8"))
     matches: list[MatchOdds] = []

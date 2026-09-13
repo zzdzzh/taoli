@@ -1,10 +1,51 @@
+# Environment and secrets
 .env
-data/
+*.env.local
+
+# Python cache
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
+.Python
+
+# Virtual environments
 .venv/
 venv/
+env/
+ENV/
+
+# Vendored dependencies (should use pip/virtualenv)
+lib/
+Lib/
+site-packages/
+
+# Data and cache files
+data/
+cache/
+*.cache
+
+# Temporary files
 matches.json
 test.json
+*.tmp
+*.log
 web_stderr.log
 web_stdout.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+.eggs/
